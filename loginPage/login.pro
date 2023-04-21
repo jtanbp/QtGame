@@ -28,12 +28,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         registration.cpp \
-        secondwindow.cpp
+        secondwindow.cpp \
+        signuppage.cpp \
+        titlepage.cpp
 
 HEADERS += \
         mainwindow.h \
         registration.h \
-        secondwindow.h
+        secondwindow.h \
+        signuppage.h \
+        titlepage.h
 
 FORMS += \
         mainwindow.ui \
