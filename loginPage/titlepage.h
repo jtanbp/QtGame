@@ -11,7 +11,7 @@ class TitlePage : public QWidget
 
 public:
     explicit TitlePage(QWidget *parent = nullptr);
-
+    QPushButton *getSignUpButton() const;
 private:
     QLineEdit *username;
     QLineEdit *password;

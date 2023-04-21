@@ -32,3 +32,7 @@ void TitlePage::SignUp()
 {
     // Perform sign-up operations here
 }
+QPushButton *TitlePage::getSignUpButton() const
+{
+    return SignUpB;
+}
