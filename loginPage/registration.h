@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::Registration *ui;
+    bool isPasswordValid(const QString &password);
 };
 
 #endif // REGISTRATION_H

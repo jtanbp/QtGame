@@ -11,44 +11,53 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGroupBox>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_Registration
 {
 public:
+    QVBoxLayout *verticalLayout_3;
     QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_4;
     QLabel *label;
-    QPushButton *finish;
-    QWidget *layoutWidget;
-    QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_4;
+    QLineEdit *firstName;
     QLabel *label_2;
-    QLineEdit *login;
-    QHBoxLayout *horizontalLayout_2;
+    QLineEdit *lastName;
     QLabel *label_3;
-    QLineEdit *pass;
+    QLineEdit *dob;
+    QLabel *label_5;
+    QComboBox *gender;
+    QLabel *label_6;
+    QLineEdit *profilePicture;
+    QLabel *label_8;
+    QLineEdit *username;
+    QLabel *label_7;
+    QLineEdit *password;
+    QPushButton *finish;
 
     void setupUi(QDialog *Registration)
     {
         if (Registration->objectName().isEmpty())
             Registration->setObjectName("Registration");
-        Registration->resize(496, 253);
+        Registration->resize(526, 538);
+        verticalLayout_3 = new QVBoxLayout(Registration);
+        verticalLayout_3->setObjectName("verticalLayout_3");
         groupBox = new QGroupBox(Registration);
         groupBox->setObjectName("groupBox");
-        groupBox->setGeometry(QRect(10, 0, 451, 241));
         groupBox->setStyleSheet(QString::fromUtf8("background-color:grey;"));
+        verticalLayout_4 = new QVBoxLayout(groupBox);
+        verticalLayout_4->setObjectName("verticalLayout_4");
         label = new QLabel(groupBox);
         label->setObjectName("label");
-        label->setGeometry(QRect(90, 0, 281, 51));
         QFont font;
         font.setFamilies({QString::fromUtf8("Stencil")});
         font.setPointSize(24);
@@ -57,62 +66,98 @@ public:
         label->setFont(font);
         label->setStyleSheet(QString::fromUtf8("font: 8pt \"Arial\";\n"
 "font: 24pt \"Stencil\";"));
+
+        verticalLayout_4->addWidget(label);
+
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName("label_4");
+
+        verticalLayout_4->addWidget(label_4);
+
+        firstName = new QLineEdit(groupBox);
+        firstName->setObjectName("firstName");
+
+        verticalLayout_4->addWidget(firstName);
+
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName("label_2");
+
+        verticalLayout_4->addWidget(label_2);
+
+        lastName = new QLineEdit(groupBox);
+        lastName->setObjectName("lastName");
+
+        verticalLayout_4->addWidget(lastName);
+
+        label_3 = new QLabel(groupBox);
+        label_3->setObjectName("label_3");
+
+        verticalLayout_4->addWidget(label_3);
+
+        dob = new QLineEdit(groupBox);
+        dob->setObjectName("dob");
+
+        verticalLayout_4->addWidget(dob);
+
+        label_5 = new QLabel(groupBox);
+        label_5->setObjectName("label_5");
+
+        verticalLayout_4->addWidget(label_5);
+
+        gender = new QComboBox(groupBox);
+        gender->addItem(QString());
+        gender->addItem(QString());
+        gender->addItem(QString());
+        gender->addItem(QString());
+        gender->setObjectName("gender");
+
+        verticalLayout_4->addWidget(gender);
+
+        label_6 = new QLabel(groupBox);
+        label_6->setObjectName("label_6");
+
+        verticalLayout_4->addWidget(label_6);
+
+        profilePicture = new QLineEdit(groupBox);
+        profilePicture->setObjectName("profilePicture");
+
+        verticalLayout_4->addWidget(profilePicture);
+
+        label_8 = new QLabel(groupBox);
+        label_8->setObjectName("label_8");
+
+        verticalLayout_4->addWidget(label_8);
+
+        username = new QLineEdit(groupBox);
+        username->setObjectName("username");
+
+        verticalLayout_4->addWidget(username);
+
+        label_7 = new QLabel(groupBox);
+        label_7->setObjectName("label_7");
+
+        verticalLayout_4->addWidget(label_7);
+
+        password = new QLineEdit(groupBox);
+        password->setObjectName("password");
+
+        verticalLayout_4->addWidget(password);
+
         finish = new QPushButton(groupBox);
         finish->setObjectName("finish");
-        finish->setGeometry(QRect(60, 190, 331, 41));
         finish->setStyleSheet(QString::fromUtf8("background-color:orange;\n"
 "border:4px solid black;\n"
 "border-radius:7px;\n"
 "font-family:Arial;"));
-        layoutWidget = new QWidget(groupBox);
-        layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(60, 70, 331, 111));
-        verticalLayout = new QVBoxLayout(layoutWidget);
-        verticalLayout->setObjectName("verticalLayout");
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName("horizontalLayout_3");
-        label_2 = new QLabel(layoutWidget);
-        label_2->setObjectName("label_2");
-        label_2->setStyleSheet(QString::fromUtf8("font: 8pt \"Arial\";\n"
-"font: 16pt \"Arial\";\n"
-""));
 
-        horizontalLayout_3->addWidget(label_2);
-
-        login = new QLineEdit(layoutWidget);
-        login->setObjectName("login");
-        login->setStyleSheet(QString::fromUtf8("border:3px solid black;\n"
-"border-radius:7px;\n"
-"font-family:Arial;\n"
-"box-shadow:inset 0 0 6px;"));
-
-        horizontalLayout_3->addWidget(login);
+        verticalLayout_4->addWidget(finish);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout_3->addWidget(groupBox);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName("horizontalLayout_2");
-        label_3 = new QLabel(layoutWidget);
-        label_3->setObjectName("label_3");
-        label_3->setStyleSheet(QString::fromUtf8("font: 8pt \"Arial\";\n"
-"font: 16pt \"Arial\";"));
-
-        horizontalLayout_2->addWidget(label_3);
-
-        pass = new QLineEdit(layoutWidget);
-        pass->setObjectName("pass");
-        pass->setStyleSheet(QString::fromUtf8("border:3px solid black;\n"
-"border-radius:7px;\n"
-"font-family:Arial;\n"
-"box-shadow:inset 0 0 6px;"));
-
-        horizontalLayout_2->addWidget(pass);
-
-
-        verticalLayout->addLayout(horizontalLayout_2);
-
+#if QT_CONFIG(shortcut)
+        label_4->setBuddy(label_4);
+#endif // QT_CONFIG(shortcut)
 
         retranslateUi(Registration);
 
@@ -124,10 +169,19 @@ public:
         Registration->setWindowTitle(QCoreApplication::translate("Registration", "Dialog", nullptr));
         groupBox->setTitle(QString());
         label->setText(QCoreApplication::translate("Registration", "        Make your account", nullptr));
+        label_4->setText(QCoreApplication::translate("Registration", "firstName", nullptr));
+        label_2->setText(QCoreApplication::translate("Registration", "lastName", nullptr));
+        label_3->setText(QCoreApplication::translate("Registration", "dob", nullptr));
+        label_5->setText(QCoreApplication::translate("Registration", "gender", nullptr));
+        gender->setItemText(0, QCoreApplication::translate("Registration", "gander", nullptr));
+        gender->setItemText(1, QCoreApplication::translate("Registration", "Male", nullptr));
+        gender->setItemText(2, QCoreApplication::translate("Registration", "Female", nullptr));
+        gender->setItemText(3, QCoreApplication::translate("Registration", "other", nullptr));
+
+        label_6->setText(QCoreApplication::translate("Registration", "profilePicture", nullptr));
+        label_8->setText(QCoreApplication::translate("Registration", "password", nullptr));
+        label_7->setText(QCoreApplication::translate("Registration", "username", nullptr));
         finish->setText(QCoreApplication::translate("Registration", "Create", nullptr));
-        label_2->setText(QCoreApplication::translate("Registration", "Login", nullptr));
-        login->setText(QCoreApplication::translate("Registration", "sd", nullptr));
-        label_3->setText(QCoreApplication::translate("Registration", "Password", nullptr));
     } // retranslateUi
 
 };

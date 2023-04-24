@@ -4,14 +4,16 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->Login, SIGNAL(released()), this,SLOT(on_pushButton_Login_clicked()));
-    connect(ui->reg, SIGNAL(released()), this,SLOT(on_pushButton_reg_clicked()));
+    connect(ui->Login, SIGNAL(released()), this,SLOT(on_Login_clicked()));
+    connect(ui->reg, SIGNAL(released()), this,SLOT(on_reg_clicked()));
+    connect(ui->playAsGuest, SIGNAL(released()), this,SLOT(on_playAsGuest_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -19,10 +21,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//use relative file path
-//
 bool login(QString username, QString password){
-    QFile file("/Users/jay/Desktop/loginPage/database.txt");
+    QFile file("database.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(nullptr, "Error!", file.errorString());
     }
@@ -31,7 +31,7 @@ bool login(QString username, QString password){
 
     while(!in.atEnd()) {
         QString line = in.readLine();
-        if(line==data){
+        if(line.split(':').at(0) == username && line.split(':').at(1) == password){
             return true;
         }
     }
@@ -43,7 +43,6 @@ void MainWindow::on_Login_clicked()
     QString username = ui->username->text();
     QString password = ui->password->text();
     bool auth = login(username, password);
-
 
     if(auth) {
         hide();
@@ -74,5 +73,12 @@ void MainWindow::on_radioButton_clicked(bool checked)
     }else {
         ui->password->setEchoMode(QLineEdit::Password);
     }
+}
+
+void MainWindow::on_playAsGuest_clicked()
+{
+    hide();
+    SecondWindow *s=new SecondWindow();
+    s->show();
 }
 

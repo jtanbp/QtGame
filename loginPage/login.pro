@@ -26,28 +26,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        databasemanager.cpp \
         main.cpp \
         mainwindow.cpp \
         registration.cpp \
-        secondwindow.cpp \
-        signuppage.cpp \
-        titlepage.cpp \
-        userinfopage.cpp
+        secondwindow.cpp
 
 HEADERS += \
-        databasemanager.h \
         mainwindow.h \
         registration.h \
-        secondwindow.h \
-        signuppage.h \
-        titlepage.h \
-        userinfopage.h
+        secondwindow.h
 
 FORMS += \
         mainwindow.ui \
-        registration.ui \
-        secondwindow.ui
+        registration.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

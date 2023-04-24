@@ -5,17 +5,14 @@
 #include <QFile>
 #include <QTextStream>
 #include <QString>
-#include <string>
-
-using namespace std;
+#include <QRegularExpression>
 
 Registration::Registration(QWidget *parent) :
-    QDialog (parent),
+    QDialog(parent),
     ui(new Ui::Registration)
 {
     ui->setupUi(this);
     connect(ui->finish, SIGNAL(released()), this,SLOT(on_finish_clicked()));
-
 }
 
 Registration::~Registration()
@@ -23,23 +20,20 @@ Registration::~Registration()
     delete ui;
 }
 
-//use relative file path
-void reg(QString username, QString password){
-    QFile file("/Users/jay/Desktop/loginPage/database.txt");
+void reg(QString userInfo){
+    QFile file("database.txt");
     if(!file.open(QIODevice::Append)) {
         QMessageBox::information(nullptr, "error", file.errorString());
     }
-    QString data = username+":"+password;
     QTextStream out(&file);
-    out<< data << "\n";
+    out<< userInfo << "\n";
 
     file.flush();
     file.close();
 }
 
-//use relative file path
 bool check(QString username){
-    QFile file("/Users/jay/Desktop/loginPage/database.txt");
+    QFile file("database.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(nullptr, "error", file.errorString());
     }
@@ -47,25 +41,47 @@ bool check(QString username){
 
     while(!in.atEnd()) {
         QString line = in.readLine();
-        if(line.split(':').contains(username)){
+        if(line.split(':').at(0) == username){
             return false;
         }
     }
     file.close();
     return true;
 }
+
+bool Registration::isPasswordValid(const QString &password)
+{
+    QRegularExpression passwordRegex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$");
+    return passwordRegex.match(password).hasMatch();
+}
+
 void Registration::on_finish_clicked()
 {
-    QString username = ui->login->text();
-    QString password1 = ui->pass->text();
-    if(password1==""){
-        QMessageBox::warning(this, "NOT", "Fill in the blank!");
+    QString firstName = ui->firstName->text();
+    QString lastName = ui->lastName->text();
+    QString dob = ui->dob->text();
+    QString gender = ui->gender->currentText();
+    QString profilePicture = ui->profilePicture->text();
+    QString username = ui->username->text();
+    QString password = ui->password->text();
+
+    if (firstName.isEmpty() || lastName.isEmpty() || dob.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "NOT", "Please fill in all required fields!");
         return;
     }
-    else{
-        reg(username, password1);
+
+    if (!isPasswordValid(password)) {
+        QMessageBox::warning(this, "Invalid Password", "Password must be at least 8 characters long and contain at least one number, upper and lower case letters.");
+        return;
+    }
+
+    if (check(username)) {
+        QString userInfo = username + ":" + password + ":" + firstName + ":" + lastName + ":" + dob + ":" + gender + ":" + profilePicture;
+        reg(userInfo);
         hide();
         MainWindow *mw=new MainWindow();
         mw->show();
+    } else {
+        QMessageBox::warning(this, "Username Exists", "The username already exists. Please choose a different one.");
     }
 }

@@ -23,9 +23,9 @@ private slots:
 
     void on_password_textEdited(const QString &arg1);
 
-
-
     void on_radioButton_clicked(bool checked);
+
+    void on_playAsGuest_clicked();
 
 private:
     Ui::MainWindow *ui;
