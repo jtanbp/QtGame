@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        databasemanager.cpp \
         main.cpp \
         mainwindow.cpp \
         registration.cpp \
@@ -34,6 +36,7 @@ SOURCES += \
         userinfopage.cpp
 
 HEADERS += \
+        databasemanager.h \
         mainwindow.h \
         registration.h \
         secondwindow.h \

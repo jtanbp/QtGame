@@ -1,6 +1,8 @@
 #include "signuppage.h"
 #include <QGridLayout>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QMessageBox>
 
 SignUpPage::SignUpPage(QWidget *parent) :
     QWidget(parent),
@@ -51,4 +53,55 @@ void SignUpPage::reset()
 void SignUpPage::signUp()
 {
     // Perform sign-up operations here
+}
+
+void SignUpPage::onSignUpClicked()
+{
+    QString usernameText = username->text();
+    QString passwordText = password->text();
+    QString firstNameText = firstName->text();
+    QString lastNameText = lastName->text();
+    QString dateOfBirthText = dateOfBirth->text();
+    QString genderText = gender->text();
+
+    if (isPasswordValid(passwordText) && !usernameText.isEmpty() &&
+        !firstNameText.isEmpty() && !lastNameText.isEmpty() && !dateOfBirthText.isEmpty())
+    {
+        if (databaseManager->addUser(usernameText, passwordText, firstNameText,lastNameText, dateOfBirthText, genderText))
+        {
+            QMessageBox::information(this, "Success", "Account created successfully");
+            // You can also emit a signal here, for example to switch to the main page after signing up
+        }
+        else
+        {
+            QMessageBox::warning(this, "Error", "Unable to create account. Username may already be taken.");
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Please make sure all required fields are filled and the password meets the criteria.");
+    }
+}
+
+bool SignUpPage::isPasswordValid(const QString &password)
+{
+    if (password.length() < 8)
+        return false;
+
+    bool hasUpper = false, hasLower = false, hasDigit = false;
+
+    for (const QChar &ch : password)
+    {
+        if (ch.isUpper())
+            hasUpper = true;
+        else if (ch.isLower())
+            hasLower = true;
+        else if (ch.isDigit())
+            hasDigit = true;
+
+        if (hasUpper && hasLower && hasDigit)
+            return true;
+    }
+
+    return false;
 }

@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
+#include "databasemanager.h"
 class SignUpPage : public QWidget
 {
     Q_OBJECT
@@ -23,9 +24,12 @@ private:
     QPushButton *Reset;
     QPushButton *SignUpB;
     QLabel *passwordTipLabel;
+    DatabaseManager *databaseManager;
+    bool isPasswordValid(const QString &password);
 private slots:
     void reset();
     void signUp();
+    void onSignUpClicked();
 };
 
 #endif // SIGNUPPAGE_H
