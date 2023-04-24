@@ -43,7 +43,7 @@ border-radius:7px;</string>
            <item row="0" column="0">
             <widget class="QLabel" name="user">
              <property name="text">
-              <string>Login</string>
+              <string>Username</string>
              </property>
             </widget>
            </item>
@@ -70,13 +70,6 @@ border-radius:7px;</string>
           </layout>
          </item>
         </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="playAsGuest">
-         <property name="text">
-          <string>Play as Guest</string>
-         </property>
-        </widget>
        </item>
        <item row="1" column="1">
         <widget class="QRadioButton" name="radioButton">
@@ -119,6 +112,13 @@ font-family:Arial;</string>
          </property>
          <property name="text">
           <string>Sign up</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="playAsGuest">
+         <property name="text">
+          <string>Play as Guest</string>
          </property>
         </widget>
        </item>

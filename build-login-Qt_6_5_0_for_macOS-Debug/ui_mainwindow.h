@@ -39,10 +39,10 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *label_2;
     QLineEdit *password;
-    QPushButton *playAsGuest;
     QRadioButton *radioButton;
     QPushButton *Login;
     QPushButton *reg;
+    QPushButton *playAsGuest;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -109,11 +109,6 @@ public:
 
         formLayout->setLayout(0, QFormLayout::LabelRole, formLayout_2);
 
-        playAsGuest = new QPushButton(groupBox);
-        playAsGuest->setObjectName("playAsGuest");
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, playAsGuest);
-
         radioButton = new QRadioButton(groupBox);
         radioButton->setObjectName("radioButton");
         radioButton->setStyleSheet(QString::fromUtf8("border:4px solid black;\n"
@@ -143,6 +138,11 @@ public:
 
         formLayout->setWidget(4, QFormLayout::SpanningRole, reg);
 
+        playAsGuest = new QPushButton(groupBox);
+        playAsGuest->setObjectName("playAsGuest");
+
+        formLayout->setWidget(1, QFormLayout::LabelRole, playAsGuest);
+
 
         verticalLayout_2->addWidget(groupBox);
 
@@ -157,12 +157,12 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "                        Shooting Game", nullptr));
-        user->setText(QCoreApplication::translate("MainWindow", "Login", nullptr));
+        user->setText(QCoreApplication::translate("MainWindow", "Username", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Password", nullptr));
-        playAsGuest->setText(QCoreApplication::translate("MainWindow", "Play as Guest", nullptr));
         radioButton->setText(QCoreApplication::translate("MainWindow", "Show", nullptr));
         Login->setText(QCoreApplication::translate("MainWindow", "Sign in", nullptr));
         reg->setText(QCoreApplication::translate("MainWindow", "Sign up", nullptr));
+        playAsGuest->setText(QCoreApplication::translate("MainWindow", "Play as Guest", nullptr));
     } // retranslateUi
 
 };
