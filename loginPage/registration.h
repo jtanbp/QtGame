@@ -17,10 +17,12 @@ public:
 
 private slots:
     void on_finish_clicked();
+    void on_profilePicture_clicked();
 
 private:
     Ui::Registration *ui;
     bool isPasswordValid(const QString &password);
+    QPushButton *profilePicture;
 };
 
 #endif // REGISTRATION_H

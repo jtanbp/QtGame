@@ -26,18 +26,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        Loginpage.cpp \
         main.cpp \
-        mainwindow.cpp \
         registration.cpp \
         secondwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
+        Loginpage.h \
         registration.h \
         secondwindow.h
 
 FORMS += \
-        mainwindow.ui \
+        Loginpage.ui \
         registration.ui
 
 # Default rules for deployment.

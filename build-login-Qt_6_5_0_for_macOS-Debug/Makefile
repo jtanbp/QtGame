@@ -52,17 +52,17 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../loginPage/main.cpp \
-		../loginPage/mainwindow.cpp \
+SOURCES       = ../loginPage/Loginpage.cpp \
+		../loginPage/main.cpp \
 		../loginPage/registration.cpp \
-		../loginPage/secondwindow.cpp moc_mainwindow.cpp \
+		../loginPage/secondwindow.cpp moc_Loginpage.cpp \
 		moc_registration.cpp \
 		moc_secondwindow.cpp
-OBJECTS       = main.o \
-		mainwindow.o \
+OBJECTS       = Loginpage.o \
+		main.o \
 		registration.o \
 		secondwindow.o \
-		moc_mainwindow.o \
+		moc_Loginpage.o \
 		moc_registration.o \
 		moc_secondwindow.o
 DIST          = /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_pre.prf \
@@ -220,10 +220,10 @@ DIST          = /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_pre.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exceptions.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/yacc.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/lex.prf \
-		../loginPage/login.pro ../loginPage/mainwindow.h \
+		../loginPage/login.pro ../loginPage/Loginpage.h \
 		../loginPage/registration.h \
-		../loginPage/secondwindow.h ../loginPage/main.cpp \
-		../loginPage/mainwindow.cpp \
+		../loginPage/secondwindow.h ../loginPage/Loginpage.cpp \
+		../loginPage/main.cpp \
 		../loginPage/registration.cpp \
 		../loginPage/secondwindow.cpp
 QMAKE_TARGET  = loogiin
@@ -246,7 +246,7 @@ include /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.mk
 first: all
 ####### Build rules
 
-loogiin.app/Contents/MacOS/loogiin: ui_mainwindow.h ui_registration.h $(OBJECTS)  
+loogiin.app/Contents/MacOS/loogiin: ui_Loginpage.h ui_registration.h $(OBJECTS)  
 	@test -d loogiin.app/Contents/MacOS/ || mkdir -p loogiin.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET)  $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -600,9 +600,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../loginPage/mainwindow.h ../loginPage/registration.h ../loginPage/secondwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../loginPage/main.cpp ../loginPage/mainwindow.cpp ../loginPage/registration.cpp ../loginPage/secondwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../loginPage/mainwindow.ui ../loginPage/registration.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../loginPage/Loginpage.h ../loginPage/registration.h ../loginPage/secondwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../loginPage/Loginpage.cpp ../loginPage/main.cpp ../loginPage/registration.cpp ../loginPage/secondwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../loginPage/Loginpage.ui ../loginPage/registration.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -631,17 +631,17 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_registration.cpp moc_secondwindow.cpp
+compiler_moc_header_make_all: moc_Loginpage.cpp moc_registration.cpp moc_secondwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_registration.cpp moc_secondwindow.cpp
-moc_mainwindow.cpp: ../loginPage/mainwindow.h \
+	-$(DEL_FILE) moc_Loginpage.cpp moc_registration.cpp moc_secondwindow.cpp
+moc_Loginpage.cpp: ../loginPage/Loginpage.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../loginPage/registration.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h \
 		/Users/junmingjin/Qt/6.5.0/macos/libexec/moc
-	/Users/junmingjin/Qt/6.5.0/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang -I/Users/junmingjin/MSD/CS6015/QTG/QtGame/loginPage -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtSql.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/junmingjin/Qt/6.5.0/macos/lib ../loginPage/mainwindow.h -o moc_mainwindow.cpp
+	/Users/junmingjin/Qt/6.5.0/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang -I/Users/junmingjin/MSD/CS6015/QTG/QtGame/loginPage -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtSql.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/junmingjin/Qt/6.5.0/macos/lib ../loginPage/Loginpage.h -o moc_Loginpage.cpp
 
 moc_registration.cpp: ../loginPage/registration.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QDialog \
@@ -659,12 +659,12 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_registration.h
+compiler_uic_make_all: ui_Loginpage.h ui_registration.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_registration.h
-ui_mainwindow.h: ../loginPage/mainwindow.ui \
+	-$(DEL_FILE) ui_Loginpage.h ui_registration.h
+ui_Loginpage.h: ../loginPage/Loginpage.ui \
 		/Users/junmingjin/Qt/6.5.0/macos/libexec/uic
-	/Users/junmingjin/Qt/6.5.0/macos/libexec/uic ../loginPage/mainwindow.ui -o ui_mainwindow.h
+	/Users/junmingjin/Qt/6.5.0/macos/libexec/uic ../loginPage/Loginpage.ui -o ui_Loginpage.h
 
 ui_registration.h: ../loginPage/registration.ui \
 		/Users/junmingjin/Qt/6.5.0/macos/libexec/uic
@@ -682,17 +682,7 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: ../loginPage/main.cpp /Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QApplication \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qapplication.h \
-		../loginPage/mainwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		../loginPage/registration.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QDialog \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../loginPage/main.cpp
-
-mainwindow.o: ../loginPage/mainwindow.cpp ../loginPage/mainwindow.h \
+Loginpage.o: ../loginPage/Loginpage.cpp ../loginPage/Loginpage.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../loginPage/registration.h \
@@ -705,14 +695,26 @@ mainwindow.o: ../loginPage/mainwindow.cpp ../loginPage/mainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../loginPage/mainwindow.cpp
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QDateTime \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qdatetime.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Loginpage.o ../loginPage/Loginpage.cpp
+
+main.o: ../loginPage/main.cpp /Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QApplication \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qapplication.h \
+		../loginPage/Loginpage.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../loginPage/registration.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QDialog \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../loginPage/main.cpp
 
 registration.o: ../loginPage/registration.cpp ../loginPage/registration.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h \
 		ui_registration.h \
-		../loginPage/mainwindow.h \
+		../loginPage/Loginpage.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMessageBox \
@@ -722,7 +724,11 @@ registration.o: ../loginPage/registration.cpp ../loginPage/registration.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QString \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qstring.h
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qstring.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QRegularExpression \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qregularexpression.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QFileDialog \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o registration.o ../loginPage/registration.cpp
 
 secondwindow.o: ../loginPage/secondwindow.cpp ../loginPage/secondwindow.h \
@@ -731,8 +737,8 @@ secondwindow.o: ../loginPage/secondwindow.cpp ../loginPage/secondwindow.h \
 		ui_secondwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o secondwindow.o ../loginPage/secondwindow.cpp
 
-moc_mainwindow.o: moc_mainwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+moc_Loginpage.o: moc_Loginpage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Loginpage.o moc_Loginpage.cpp
 
 moc_registration.o: moc_registration.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_registration.o moc_registration.cpp

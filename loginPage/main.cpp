@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "mainwindow.h"
+#include "Loginpage.h"
 
 int main(int argc, char *argv[])
 {

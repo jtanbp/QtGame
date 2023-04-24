@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
@@ -33,11 +34,11 @@ public:
     QLabel *label_2;
     QLineEdit *lastName;
     QLabel *label_3;
-    QLineEdit *dob;
+    QDateEdit *dob;
     QLabel *label_5;
     QComboBox *gender;
     QLabel *label_6;
-    QLineEdit *profilePicture;
+    QPushButton *profilePicture;
     QLabel *label_8;
     QLineEdit *username;
     QLabel *label_7;
@@ -48,16 +49,18 @@ public:
     {
         if (Registration->objectName().isEmpty())
             Registration->setObjectName("Registration");
-        Registration->resize(526, 538);
+        Registration->resize(626, 604);
         verticalLayout_3 = new QVBoxLayout(Registration);
         verticalLayout_3->setObjectName("verticalLayout_3");
         groupBox = new QGroupBox(Registration);
         groupBox->setObjectName("groupBox");
+        groupBox->setAutoFillBackground(false);
         groupBox->setStyleSheet(QString::fromUtf8("background-color:grey;"));
         verticalLayout_4 = new QVBoxLayout(groupBox);
         verticalLayout_4->setObjectName("verticalLayout_4");
         label = new QLabel(groupBox);
         label->setObjectName("label");
+        label->setMinimumSize(QSize(572, 0));
         QFont font;
         font.setFamilies({QString::fromUtf8("Stencil")});
         font.setPointSize(24);
@@ -67,17 +70,19 @@ public:
         label->setStyleSheet(QString::fromUtf8("font: 8pt \"Arial\";\n"
 "font: 24pt \"Stencil\";"));
 
-        verticalLayout_4->addWidget(label);
+        verticalLayout_4->addWidget(label, 0, Qt::AlignLeft);
 
         label_4 = new QLabel(groupBox);
         label_4->setObjectName("label_4");
 
-        verticalLayout_4->addWidget(label_4);
+        verticalLayout_4->addWidget(label_4, 0, Qt::AlignLeft);
 
         firstName = new QLineEdit(groupBox);
         firstName->setObjectName("firstName");
+        firstName->setEnabled(true);
+        firstName->setAutoFillBackground(true);
 
-        verticalLayout_4->addWidget(firstName);
+        verticalLayout_4->addWidget(firstName, 0, Qt::AlignLeft);
 
         label_2 = new QLabel(groupBox);
         label_2->setObjectName("label_2");
@@ -86,18 +91,20 @@ public:
 
         lastName = new QLineEdit(groupBox);
         lastName->setObjectName("lastName");
+        lastName->setTabletTracking(true);
+        lastName->setAutoFillBackground(true);
 
-        verticalLayout_4->addWidget(lastName);
+        verticalLayout_4->addWidget(lastName, 0, Qt::AlignLeft);
 
         label_3 = new QLabel(groupBox);
         label_3->setObjectName("label_3");
 
         verticalLayout_4->addWidget(label_3);
 
-        dob = new QLineEdit(groupBox);
+        dob = new QDateEdit(groupBox);
         dob->setObjectName("dob");
 
-        verticalLayout_4->addWidget(dob);
+        verticalLayout_4->addWidget(dob, 0, Qt::AlignLeft);
 
         label_5 = new QLabel(groupBox);
         label_5->setObjectName("label_5");
@@ -111,17 +118,17 @@ public:
         gender->addItem(QString());
         gender->setObjectName("gender");
 
-        verticalLayout_4->addWidget(gender);
+        verticalLayout_4->addWidget(gender, 0, Qt::AlignLeft);
 
         label_6 = new QLabel(groupBox);
         label_6->setObjectName("label_6");
 
         verticalLayout_4->addWidget(label_6);
 
-        profilePicture = new QLineEdit(groupBox);
+        profilePicture = new QPushButton(groupBox);
         profilePicture->setObjectName("profilePicture");
 
-        verticalLayout_4->addWidget(profilePicture);
+        verticalLayout_4->addWidget(profilePicture, 0, Qt::AlignLeft);
 
         label_8 = new QLabel(groupBox);
         label_8->setObjectName("label_8");
@@ -130,8 +137,9 @@ public:
 
         username = new QLineEdit(groupBox);
         username->setObjectName("username");
+        username->setAutoFillBackground(true);
 
-        verticalLayout_4->addWidget(username);
+        verticalLayout_4->addWidget(username, 0, Qt::AlignLeft);
 
         label_7 = new QLabel(groupBox);
         label_7->setObjectName("label_7");
@@ -140,8 +148,9 @@ public:
 
         password = new QLineEdit(groupBox);
         password->setObjectName("password");
+        password->setAutoFillBackground(true);
 
-        verticalLayout_4->addWidget(password);
+        verticalLayout_4->addWidget(password, 0, Qt::AlignLeft);
 
         finish = new QPushButton(groupBox);
         finish->setObjectName("finish");
@@ -150,7 +159,7 @@ public:
 "border-radius:7px;\n"
 "font-family:Arial;"));
 
-        verticalLayout_4->addWidget(finish);
+        verticalLayout_4->addWidget(finish, 0, Qt::AlignLeft);
 
 
         verticalLayout_3->addWidget(groupBox);
@@ -168,17 +177,18 @@ public:
     {
         Registration->setWindowTitle(QCoreApplication::translate("Registration", "Dialog", nullptr));
         groupBox->setTitle(QString());
-        label->setText(QCoreApplication::translate("Registration", "        Make your account", nullptr));
-        label_4->setText(QCoreApplication::translate("Registration", "firstName", nullptr));
-        label_2->setText(QCoreApplication::translate("Registration", "lastName", nullptr));
-        label_3->setText(QCoreApplication::translate("Registration", "dob", nullptr));
-        label_5->setText(QCoreApplication::translate("Registration", "gender", nullptr));
+        label->setText(QCoreApplication::translate("Registration", "        Make Your Account", nullptr));
+        label_4->setText(QCoreApplication::translate("Registration", "FirstName", nullptr));
+        label_2->setText(QCoreApplication::translate("Registration", "LastName", nullptr));
+        label_3->setText(QCoreApplication::translate("Registration", "Date of Birth ", nullptr));
+        label_5->setText(QCoreApplication::translate("Registration", "Gender", nullptr));
         gender->setItemText(0, QCoreApplication::translate("Registration", "gander", nullptr));
         gender->setItemText(1, QCoreApplication::translate("Registration", "Male", nullptr));
         gender->setItemText(2, QCoreApplication::translate("Registration", "Female", nullptr));
         gender->setItemText(3, QCoreApplication::translate("Registration", "other", nullptr));
 
-        label_6->setText(QCoreApplication::translate("Registration", "profilePicture", nullptr));
+        label_6->setText(QCoreApplication::translate("Registration", "ProfilePicture", nullptr));
+        profilePicture->setText(QCoreApplication::translate("Registration", "Browse", nullptr));
         label_8->setText(QCoreApplication::translate("Registration", "password", nullptr));
         label_7->setText(QCoreApplication::translate("Registration", "username", nullptr));
         finish->setText(QCoreApplication::translate("Registration", "Create", nullptr));

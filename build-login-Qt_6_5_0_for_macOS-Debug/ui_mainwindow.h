@@ -39,9 +39,9 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *label_2;
     QLineEdit *password;
-    QRadioButton *radioButton;
     QPushButton *Login;
     QPushButton *reg;
+    QRadioButton *radioButton;
     QPushButton *playAsGuest;
 
     void setupUi(QMainWindow *MainWindow)
@@ -109,13 +109,6 @@ public:
 
         formLayout->setLayout(0, QFormLayout::LabelRole, formLayout_2);
 
-        radioButton = new QRadioButton(groupBox);
-        radioButton->setObjectName("radioButton");
-        radioButton->setStyleSheet(QString::fromUtf8("border:4px solid black;\n"
-"border-radius:7px;"));
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, radioButton);
-
         Login = new QPushButton(groupBox);
         Login->setObjectName("Login");
         Login->setStyleSheet(QString::fromUtf8("background-color:green;\n"
@@ -138,6 +131,14 @@ public:
 
         formLayout->setWidget(4, QFormLayout::SpanningRole, reg);
 
+        radioButton = new QRadioButton(groupBox);
+        radioButton->setObjectName("radioButton");
+        radioButton->setMinimumSize(QSize(108, 0));
+        radioButton->setStyleSheet(QString::fromUtf8("border:4px solid black;\n"
+"border-radius:7px;"));
+
+        formLayout->setWidget(1, QFormLayout::FieldRole, radioButton);
+
         playAsGuest = new QPushButton(groupBox);
         playAsGuest->setObjectName("playAsGuest");
 
@@ -159,9 +160,9 @@ public:
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "                        Shooting Game", nullptr));
         user->setText(QCoreApplication::translate("MainWindow", "Username", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Password", nullptr));
-        radioButton->setText(QCoreApplication::translate("MainWindow", "Show", nullptr));
         Login->setText(QCoreApplication::translate("MainWindow", "Sign in", nullptr));
         reg->setText(QCoreApplication::translate("MainWindow", "Sign up", nullptr));
+        radioButton->setText(QCoreApplication::translate("MainWindow", "Show", nullptr));
         playAsGuest->setText(QCoreApplication::translate("MainWindow", "Play as Guest", nullptr));
     } // retranslateUi
 

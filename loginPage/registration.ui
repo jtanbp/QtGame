@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>526</width>
-    <height>538</height>
+    <width>626</width>
+    <height>604</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QGroupBox" name="groupBox">
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color:grey;</string>
      </property>
@@ -23,8 +26,14 @@
       <string/>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>572</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <family>Stencil</family>
@@ -38,51 +47,65 @@
 font: 24pt &quot;Stencil&quot;;</string>
         </property>
         <property name="text">
-         <string>        Make your account</string>
+         <string>        Make Your Account</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>firstName</string>
+         <string>FirstName</string>
         </property>
         <property name="buddy">
          <cstring>label_4</cstring>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="firstName"/>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QLineEdit" name="firstName">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>lastName</string>
+         <string>LastName</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="lastName"/>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QLineEdit" name="lastName">
+        <property name="tabletTracking">
+         <bool>true</bool>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>dob</string>
+         <string>Date of Birth </string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="dob"/>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QDateEdit" name="dob"/>
       </item>
       <item>
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>gender</string>
+         <string>Gender</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QComboBox" name="gender">
         <item>
          <property name="text">
@@ -109,12 +132,16 @@ font: 24pt &quot;Stencil&quot;;</string>
       <item>
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>profilePicture</string>
+         <string>ProfilePicture</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="profilePicture"/>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QPushButton" name="profilePicture">
+        <property name="text">
+         <string>Browse</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_8">
@@ -123,8 +150,12 @@ font: 24pt &quot;Stencil&quot;;</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="username"/>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QLineEdit" name="username">
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_7">
@@ -133,10 +164,14 @@ font: 24pt &quot;Stencil&quot;;</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="password"/>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QLineEdit" name="password">
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="finish">
         <property name="styleSheet">
          <string notr="true">background-color:orange;

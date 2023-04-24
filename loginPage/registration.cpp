@@ -1,11 +1,12 @@
 #include "registration.h"
 #include "ui_registration.h"
-#include "mainwindow.h"
+#include "Loginpage.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
 #include <QString>
 #include <QRegularExpression>
+#include <QFileDialog>
 
 Registration::Registration(QWidget *parent) :
     QDialog(parent),
@@ -85,3 +86,14 @@ void Registration::on_finish_clicked()
         QMessageBox::warning(this, "Username Exists", "The username already exists. Please choose a different one.");
     }
 }
+
+
+void Registration::on_profilePicture_clicked()
+{
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Images (*.png *.jpg *.jpeg *.bmp *.gif)"));
+
+    if (!filePath.isEmpty()) {
+        ui->profilePicture->setText(filePath);
+    }
+}
+
