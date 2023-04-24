@@ -22,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
     movingUp(false),
     movingDown(false),
     isJumping(false),
-    isShouting(false)
+    isShouting(false),
+    damageBuffer(false)
 {
 
     setFixedSize(900, 600);
@@ -45,9 +46,11 @@ MainWindow::MainWindow(QWidget *parent)
     positionUpdateTimer->start(16); // Update the position at 60 FPS
 
     health = 3;
+    score = 0;
     isHurt = false;
     gamePaused = false;
     healthLabel->setText(tr("Health: %1").arg(health)); // Update Health Counter on Screen
+    playerScore->setText(tr("Score: %1").arg(score)); // Update Score Counter on Screen
 
     createEnemy();
     createBombs();
@@ -61,7 +64,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->isAutoRepeat() || isShouting) {
+    if (event->isAutoRepeat() || isShouting || isHurt) {
         return;
     }
 
@@ -136,7 +139,7 @@ void MainWindow::createGameInfo() {
     playerIcon->setScaledContents(true);
 
     QLabel *playerName = new QLabel("Player Name");
-    QLabel *playerScore = new QLabel("Score: 0");
+    playerScore = new QLabel();
     healthLabel = new QLabel();
 
     QPushButton *leaderboardButton = new QPushButton("Leaderboard");
@@ -319,56 +322,98 @@ void MainWindow::shootMusicNote() {
 
     musicNotes.append(musicNote);
 
-    QTimer *musicNotePositionTimer = new QTimer(this);
-    musicNoteAnimationTimers.append(musicNotePositionTimer);
-    connect(musicNotePositionTimer, &QTimer::timeout, [this, musicNote]() {
+    QTimer *musicNoteTimer = new QTimer(this);
+    connect(musicNoteTimer, &QTimer::timeout, [this, musicNote, musicNoteTimer]() {
+        musicNoteFrameIndex = (musicNoteFrameIndex + 1) % musicNoteFrames.size();
+        musicNote->setPixmap(musicNoteFrames[musicNoteFrameIndex]);
         int newX = musicNote->x() + 5;
         if (newX > gameWindow->width()) {
-            QTimer *timer = qobject_cast<QTimer *>(sender());
-            int noteIndex = musicNoteAnimationTimers.indexOf(timer);
+            int noteIndex = musicNotes.indexOf(musicNote);
             if (noteIndex != -1) {
+                QLabel *note = musicNotes[noteIndex];
                 musicNotes.removeAt(noteIndex);
-                musicNoteAnimationTimers.removeAt(noteIndex);
-                delete timer;
-                delete musicNote;
+                musicNoteTimer->stop();
+                delete musicNoteTimer;
+                delete note;
             }
         } else {
             musicNote->move(newX, musicNote->y());
         }
+        checkMusicCollision();
     });
-    musicNotePositionTimer->start(16);
-
-    QTimer *musicNoteAnimationTimer = new QTimer(this);
-    connect(musicNoteAnimationTimer, &QTimer::timeout, this, [this, musicNote]() { updateMusicNoteAnimation(musicNote); });
-    musicNoteAnimationTimer->start(150);
-}
-
-void MainWindow::updateMusicNoteAnimation(QLabel *musicNote) {
-    musicNoteFrameIndex = (musicNoteFrameIndex + 1) % musicNoteFrames.size();
-    musicNote->setPixmap(musicNoteFrames[musicNoteFrameIndex]);
+    musicNoteTimer->start(16);
 }
 
 
-void MainWindow::removeMusicNote() {
-    QTimer *timer = qobject_cast<QTimer *>(sender());
-    if (!timer) {
-            return;
+void MainWindow::checkMusicCollision() {
+    if (damageBuffer) {
+        return;
     }
 
-    // Find music note associated with the timer
-    int noteIndex = musicNoteAnimationTimers.indexOf(timer);
-    if (noteIndex == -1) {
-            return;
+    QRect enemyRect(enemy->pos(), enemy->size());
+    //bool collision = false;
+    for (int i = 0; i < musicNotes.size(); ++i) {
+            QLabel *musicNote = musicNotes[i];
+            if (!musicNote) {
+                continue;
+            }
+            QRect noteRect(musicNote->pos(), musicNote->size());
+            if (enemyRect.intersects(noteRect)) {
+                updateScore();
+                damageBuffer = true;
+                QTimer::singleShot(1000, this, [this]() {
+                    // After 1.5 seconds, revert back to normal
+                    damageBuffer = false;
+                    animationTimer->start();
+                });
+                //musicNotesToRemove[i] = true;
+                break;
+            }
     }
-
-    QLabel *note = musicNotes[noteIndex];
-
-    // Remove MusicNote with the Timer at index
-    musicNotes.removeAt(noteIndex);
-    musicNoteAnimationTimers.removeAt(noteIndex);
-    delete timer;
-    delete note;
 }
+
+void MainWindow::removeMarkedMusicNotes() {
+    for (int i = musicNotes.size() - 1; i >= 0; --i) {
+            if (musicNotesToRemove[i]) {
+                QLabel *musicNote = musicNotes[i];
+                QTimer *timer = musicNoteAnimationTimers[i];
+                QObject::disconnect(timer, nullptr, this, nullptr); // Disconnect the timer
+                timer->stop();
+                musicNoteAnimationTimers.removeAt(i);
+                musicNotes.removeAt(i);
+                musicNotesToRemove.removeAt(i);
+                delete timer;
+                delete musicNote;
+            }
+    }
+}
+
+void MainWindow::updateScore() {
+    score++;
+    playerScore->setText(tr("Score: %1").arg(score));
+}
+
+
+//void MainWindow::removeMusicNote() {
+//    QTimer *timer = qobject_cast<QTimer *>(sender());
+//    if (!timer) {
+//            return;
+//    }
+
+//    // Find music note associated with the timer
+//    int noteIndex = musicNoteAnimationTimers.indexOf(timer);
+//    if (noteIndex == -1) {
+//            return;
+//    }
+
+//    QLabel *note = musicNotes[noteIndex];
+
+//    // Remove MusicNote with the Timer at index
+//    musicNotes.removeAt(noteIndex);
+//    musicNoteAnimationTimers.removeAt(noteIndex);
+//    delete timer;
+//    delete note;
+//}
 
 void MainWindow::createEnemy() {
     enemy = new QLabel(gameWindow);
@@ -384,29 +429,6 @@ void MainWindow::createEnemy() {
 }
 
 void MainWindow::moveEnemy() {
-    bomb *bombb = new bomb;
-
-    //connect(bombb, SIGNAL(hpChanged(int)),ui->lcdNumber2, SLOT(display(int)));
-
-    if(health == 0){
-            // When HP is 0, next step.
-            // TODO: Implement something here to check for 0 hp
-//            QPushButton *closebtn = new QPushButton("Game over hahaha");
-//            closebtn->setWindowTitle("Elite Game");
-//            connect(closebtn, SIGNAL(clicked()), this, SLOT(close()));
-//            closebtn->show();
-            stopBombSpawning();
-            exit(1);
-    }
-
-    //Spawn random bomb png
-    std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<> dis(0, 2);
-    int random_num = dis(gen);
-
-    bombb->setPixmap(QPixmap(QString(":/images/bomb/%1.png").arg(random_num)));
-
-
     int maxY = gameWindow->height() - 150 - enemy->height(); // maximum vertical position of pixmap
     int newY = (maxY * (1 + qSin(QTime::currentTime().msecsSinceStartOfDay() * 0.001))) / 2;
     enemy->move(gameWindow->width() - enemy->width(), newY + 150);
@@ -469,18 +491,24 @@ void MainWindow::checkCollisions() {
             return;
     }
 
-    QRect playerRect(player->pos(), player->size());
+    QRect playerRect(player->pos().x() + player->width()/2, player->pos().y() + player->height()/2, 35, 45);
 
-    for (QLabel *bomb : bombs) {
-            if (!bomb) {
+    for (int i = 0; i < bombs.size(); ++i) {
+        QLabel *bomb = bombs[i];
+        if (!bomb) {
             continue;
-            }
-            QRect bombRect(bomb->pos(), bomb->size());
-            if (playerRect.intersects(bombRect)) {
-                hurtPlayer();
-                break;
-            }
-     }
+        }
+        QRect bombRect(bomb->pos().x(), bomb->pos().y(), 20, 20);
+        if (playerRect.intersects(bombRect)) {
+            hurtPlayer();
+            //QLabel *bomb = bombs[i];
+            bombs.removeAt(i);
+            bombAnimationTimers[i]->stop();
+            bombAnimationTimers.removeAt(i);
+            delete bomb;
+            break;
+        }
+    }
 }
 
 
@@ -491,14 +519,18 @@ void MainWindow::hurtPlayer() {
     }
 
     isHurt = true;
+    movingLeft = false;
+    movingRight = false;
+    movingUp = false;
+    movingDown = false;
     health--;
 
     QPixmap originalPixmap = player->pixmap(); // Save the original pixmap
     player->setPixmap(QPixmap(QString(":/images/miku_die/0.png")));
     animationTimer->stop();
 
-    QTimer::singleShot(1000, this, [this, originalPixmap]() {
-        // After 1 seconds, revert back to normal
+    QTimer::singleShot(1500, this, [this, originalPixmap]() {
+        // After 1.5 seconds, revert back to normal
         player->setPixmap(originalPixmap);
         isHurt = false;
         animationTimer->start();
@@ -508,6 +540,10 @@ void MainWindow::hurtPlayer() {
 
     if (health <= 0) {
             animationTimer->stop();
+            movingLeft = false;
+            movingRight = false;
+            movingUp = false;
+            movingDown = false;
             player->setPixmap(QPixmap(QString(":/images/miku_die/2.png")));
             pauseGame();
             QMessageBox::StandardButton reply;

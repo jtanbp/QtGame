@@ -1,9 +1,7 @@
 HEADERS += \
-    bomb.h \
     mainwindow.h
 
 SOURCES += \
-    bomb.cpp \
     main.cpp \
     mainwindow.cpp
 
