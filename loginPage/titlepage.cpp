@@ -16,6 +16,8 @@ TitlePage::TitlePage(QWidget *parent) :
     layout->addWidget(password, 1, 1);
     layout->addWidget(LogInB, 2, 0);
     layout->addWidget(SignUpB, 2, 1);
+    GuestLogInB = new QPushButton("Log In as Guest", this);
+    layout->addWidget(GuestLogInB, 3, 0, 1, 2);
 
     password->setEchoMode(QLineEdit::Password);
 
@@ -35,4 +37,13 @@ void TitlePage::SignUp()
 QPushButton *TitlePage::getSignUpButton() const
 {
     return SignUpB;
+}
+
+QPushButton *TitlePage::getLogInButton() const
+{
+    return LogInB;
+}
+QPushButton *TitlePage::getGuestLogInButton() const
+{
+    return GuestLogInB;
 }

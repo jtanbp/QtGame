@@ -27,14 +27,14 @@ SignUpPage::SignUpPage(QWidget *parent) :
     layout->addWidget(dateOfBirth, 4, 1);
     layout->addWidget(new QLabel("Gender:", this), 5, 0);
     layout->addWidget(gender, 5, 1);
-    layout->addWidget(UploadPFPB, 6, 0, 1, 2);
+    layout->addWidget(UploadPFPB, 6, 0);
     layout->addWidget(Reset, 7, 0);
     layout->addWidget(SignUpB, 7, 1);
 
     password->setEchoMode(QLineEdit::Password);
 
-    connect(Reset, &QPushButton::clicked, this, &SignUpPage::reset);
-    connect(SignUpB, &QPushButton::clicked, this, &SignUpPage::signUp);
+    passwordTipLabel = new QLabel("Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number", this);
+    layout->addWidget(passwordTipLabel, 8, 0, 1, 2);
 }
 
 void SignUpPage::reset()

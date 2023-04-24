@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QPushButton>
-
+#include <QLabel>
 class SignUpPage : public QWidget
 {
     Q_OBJECT
@@ -22,7 +22,7 @@ private:
     QPushButton *UploadPFPB;
     QPushButton *Reset;
     QPushButton *SignUpB;
-
+    QLabel *passwordTipLabel;
 private slots:
     void reset();
     void signUp();

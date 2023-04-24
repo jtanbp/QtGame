@@ -10,13 +10,17 @@ class TitlePage : public QWidget
     Q_OBJECT
 
 public:
+
+    QPushButton *getLogInButton() const;
     explicit TitlePage(QWidget *parent = nullptr);
     QPushButton *getSignUpButton() const;
+    QPushButton *getGuestLogInButton() const;
 private:
     QLineEdit *username;
     QLineEdit *password;
     QPushButton *LogInB;
     QPushButton *SignUpB;
+    QPushButton *GuestLogInB;
 
 private slots:
     void Login();
