@@ -70,7 +70,6 @@ private:
     void shootMusicNote();
     void checkMusicCollision();
     void updateScore();
-    void removeMarkedMusicNotes();
 
     //Phase 2
     QLabel *enemy;

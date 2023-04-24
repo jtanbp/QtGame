@@ -289,7 +289,7 @@ void MainWindow::jump() {
 void MainWindow::shoot() {
     isShouting = true;
     shoutFrameIndex = 0;
-    std::cout << "Shout beings\n";
+    //std::cout << "Shout beings\n";
 
     QTimer *shoutTimer = new QTimer(this);
     connect(shoutTimer, &QTimer::timeout, [=]() {
@@ -297,7 +297,7 @@ void MainWindow::shoot() {
             player->setPixmap(shoutFrames[shoutFrameIndex]);
 
             if (shoutFrameIndex == 4) {
-                std::cout << "Music Note beings\n";
+                //std::cout << "Music Note beings\n";
                 shootMusicNote();
             }
 
@@ -366,54 +366,16 @@ void MainWindow::checkMusicCollision() {
                     damageBuffer = false;
                     animationTimer->start();
                 });
-                //musicNotesToRemove[i] = true;
                 break;
             }
     }
 }
 
-void MainWindow::removeMarkedMusicNotes() {
-    for (int i = musicNotes.size() - 1; i >= 0; --i) {
-            if (musicNotesToRemove[i]) {
-                QLabel *musicNote = musicNotes[i];
-                QTimer *timer = musicNoteAnimationTimers[i];
-                QObject::disconnect(timer, nullptr, this, nullptr); // Disconnect the timer
-                timer->stop();
-                musicNoteAnimationTimers.removeAt(i);
-                musicNotes.removeAt(i);
-                musicNotesToRemove.removeAt(i);
-                delete timer;
-                delete musicNote;
-            }
-    }
-}
 
 void MainWindow::updateScore() {
     score++;
     playerScore->setText(tr("Score: %1").arg(score));
 }
-
-
-//void MainWindow::removeMusicNote() {
-//    QTimer *timer = qobject_cast<QTimer *>(sender());
-//    if (!timer) {
-//            return;
-//    }
-
-//    // Find music note associated with the timer
-//    int noteIndex = musicNoteAnimationTimers.indexOf(timer);
-//    if (noteIndex == -1) {
-//            return;
-//    }
-
-//    QLabel *note = musicNotes[noteIndex];
-
-//    // Remove MusicNote with the Timer at index
-//    musicNotes.removeAt(noteIndex);
-//    musicNoteAnimationTimers.removeAt(noteIndex);
-//    delete timer;
-//    delete note;
-//}
 
 void MainWindow::createEnemy() {
     enemy = new QLabel(gameWindow);
