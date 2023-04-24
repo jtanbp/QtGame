@@ -8,7 +8,6 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QMovie>
-#include "bomb.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -25,13 +24,15 @@ protected:
 
 private slots:
     void updateAnimation();
-    void removeMusicNote();
+    //void removeMusicNote();
 
 private:
     QLabel *gameInfo;
     QWidget *gameWindow;
     QMovie *backgroundMovie;
     QLabel *player;
+    QLabel *playerScore;
+    int score;
 
     QList<QLabel *> musicNotes;
     QList<QTimer *> musicNoteAnimationTimers;
@@ -50,6 +51,7 @@ private:
     int musicNoteFrameIndex;
     QTimer *animationTimer;
     QTimer *positionUpdateTimer;
+    QList<bool> musicNotesToRemove;
 
     bool movingLeft;
     bool movingRight;
@@ -57,6 +59,7 @@ private:
     bool movingDown;
     bool isJumping;
     bool isShouting;
+    bool damageBuffer;
 
     void createGameInfo();
     void createGameWindow();
@@ -65,7 +68,8 @@ private:
     void jump();
     void shoot();
     void shootMusicNote();
-    void updateMusicNoteAnimation(QLabel *musicNote);
+    void checkMusicCollision();
+    void updateScore();
 
     //Phase 2
     QLabel *enemy;
