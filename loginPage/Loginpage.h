@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "registration.h"
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +29,10 @@ private slots:
     void on_playAsGuest_clicked();
 
 private:
+private:
+    QLabel *nameLabel;
+    QLabel *profilePictureLabel;
+    QLabel *dateLabel;
     Ui::MainWindow *ui;
 };
 
