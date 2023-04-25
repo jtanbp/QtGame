@@ -1,9 +1,9 @@
 HEADERS += \
-    mainwindow.h
+    gamewindow.h
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp
+    gamewindow.cpp \
+    main.cpp
 
 QT += widgets
 QT += core gui

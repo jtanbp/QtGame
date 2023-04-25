@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef GAMEWINDOW_H
+#define GAMEWINDOW_H
 
 #include <QMainWindow>
 #include <QWidget>
@@ -9,14 +9,19 @@
 #include <QPixmap>
 #include <QMovie>
 
-class MainWindow : public QMainWindow {
+typedef enum {
+    difficulty_placeholder, // = 0
+    difficulty_easy, // = 1;
+    difficulty_medium, // = 2;
+    difficulty_hard,  // = 3;
+} difficulty_t;
+
+class GameWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-    QTimer *timer;
+    explicit GameWindow(QWidget *parent = nullptr);
+    ~GameWindow();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -24,7 +29,6 @@ protected:
 
 private slots:
     void updateAnimation();
-    //void removeMusicNote();
 
 private:
     QLabel *gameInfo;
@@ -33,9 +37,10 @@ private:
     QLabel *player;
     QLabel *playerScore;
     int score;
+    int difficulty;
 
     QList<QLabel *> musicNotes;
-    QList<QTimer *> musicNoteAnimationTimers;
+    QList<QPointer<QTimer>> musicNoteAnimationTimers;
     int maxHeightNote;
     int maxWidthNote;
 
@@ -51,7 +56,6 @@ private:
     int musicNoteFrameIndex;
     QTimer *animationTimer;
     QTimer *positionUpdateTimer;
-    QList<bool> musicNotesToRemove;
 
     bool movingLeft;
     bool movingRight;
@@ -88,6 +92,7 @@ private:
     void moveEnemy();
     void createBombs();
     void spawnBomb();
+    void clearBombs();
     void startBombSpawning();
     void stopBombSpawning();
     void checkCollisions();
@@ -96,4 +101,4 @@ private:
     void restartGame();
 };
 
-#endif // MAINWINDOW_H
+#endif // GAMEWINDOW_H
