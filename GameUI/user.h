@@ -16,10 +16,12 @@ public:
     int highScore = 0;
     int ranking = 0;
     std::vector<int> scoreHistory {0, 0, 0, 0, 0};
-//    Score getHighScore();
-//    void updateHighScore(Score score);
-//    void updateRanking();
-//    std::vector<Score> getScoreHistory();
+    int getHighScore(); // Change Score to int
+    void updateHighScore(int score); // Change Score to int
+    void updateRanking();
+    std::vector<int> getScoreHistory(); // Change Score to int
+    void updateScoreHistory(int score); // Add this line
+    void saveScoreData(); // Add this line
 };
 
 #endif // USER_H

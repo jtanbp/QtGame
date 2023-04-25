@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <iostream>
 #include <ctime>
+#include "user.h"
 
 GameWindow::GameWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -587,5 +588,19 @@ void GameWindow::restartGame() {
     isShouting = false;
     isJumping = false;
 }
+void GameWindow::gameOver() {
+    // This method should be called when the game is over, and the score has been calculated
+    int currentScore = 100; // Replace with the actual score obtained by the user
+
+    // Retrieve the current user (you may want to implement a method to get the current user)
+    User currentUser("user123");
+
+    currentUser.updateHighScore(currentScore);
+    currentUser.updateScoreHistory(currentScore);
+    currentUser.saveScoreData();
+
+    // Show the game over screen, or perform any other actions you need when the game is over
+}
+
 
 

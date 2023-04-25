@@ -103,6 +103,7 @@ private:
     void hurtPlayer();
     void pauseGame();
     void restartGame();
+    void gameOver();
 
 signals:
     void HomeClicked();
