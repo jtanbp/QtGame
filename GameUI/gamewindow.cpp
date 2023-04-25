@@ -55,6 +55,7 @@ GameWindow::GameWindow(QWidget *parent)
     createEnemy();
     createBombs();
     restartGame();
+    //pauseGame();
     //startBombSpawning();
 }
 
@@ -137,12 +138,14 @@ void GameWindow::createGameInfo() {
     playerScore = new QLabel();
     healthLabel = new QLabel();
 
-    QPushButton *leaderboardButton = new QPushButton("Leaderboard");
-    QPushButton *restartButton = new QPushButton("Restart");
+    QPushButton *easyButton = new QPushButton("Easy");
+    QPushButton *mediumButton = new QPushButton("Medium");
+    QPushButton *hardButton = new QPushButton("Hard");
     QPushButton *logoutButton = new QPushButton("Log Out");
 
-    leaderboardButton->setFocusPolicy(Qt::NoFocus);
-    restartButton->setFocusPolicy(Qt::NoFocus);
+    easyButton->setFocusPolicy(Qt::NoFocus);
+    mediumButton->setFocusPolicy(Qt::NoFocus);
+    hardButton->setFocusPolicy(Qt::NoFocus);
     logoutButton->setFocusPolicy(Qt::NoFocus);
 
     gameInfoLayout->addWidget(playerIcon);
@@ -150,9 +153,20 @@ void GameWindow::createGameInfo() {
     gameInfoLayout->addWidget(playerScore);
     gameInfoLayout->addWidget(healthLabel);
     gameInfoLayout->addStretch(); // To create a gap from top and bottom
-    gameInfoLayout->addWidget(leaderboardButton);
-    gameInfoLayout->addWidget(restartButton);
+    gameInfoLayout->addWidget(easyButton);
+    gameInfoLayout->addWidget(mediumButton);
+    gameInfoLayout->addWidget(hardButton);
     gameInfoLayout->addWidget(logoutButton);
+
+//    connect(easyButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_easy)));
+//    connect(mediumButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_medium)));
+//    connect(hardButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_hard)));
+}
+
+void GameWindow::setDifficulty(difficulty_t difficulty_level) {
+    //pauseGame();
+    difficulty = difficulty_level;
+    restartGame();
 }
 
 void GameWindow::createGameWindow() {
@@ -205,6 +219,13 @@ void GameWindow::createPlayer() {
         maxWidthNote = qMax(maxWidthNote, frame.width());
         maxHeightNote = qMax(maxHeightNote, frame.height());
     }
+
+    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
+    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
+    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
+    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
+    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
+    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
 
     player = new QLabel(gameWindow);
     player->setPixmap(idleFrames[idleFrameIndex]);
@@ -350,20 +371,6 @@ void GameWindow::checkMusicCollision() {
             QRect noteRect(musicNote->pos(), musicNote->size());
             if (enemyRect.intersects(noteRect)) {
                 updateScore();
-//                damageBuffer = true;
-//                musicNotes.removeAt(i);
-//                //QTimer* musicTimer =
-//                musicNoteAnimationTimers[i]->stop();
-//                //musicTimer->stop();
-//                //delete musicTimer;
-//                musicNoteAnimationTimers.removeAt(i);
-//                delete musicNote;
-
-//                QTimer::singleShot(1000, this, [this]() {
-//                    // For 1 seconds, prevent further damage on the enemy
-//                    damageBuffer = false;
-//                });
-
                 break;
             }
     }
@@ -384,7 +391,6 @@ void GameWindow::createEnemy() {
 
     enemyMoveTimer = new QTimer(this);
     connect(enemyMoveTimer, &QTimer::timeout, this, &GameWindow::moveEnemy);
-    //enemyMoveTimer->start(100);
 }
 
 // Function to move enemy in a specific parabola that is similar to the Sine wave
@@ -503,7 +509,7 @@ void GameWindow::checkCollisions() {
 
 void GameWindow::hurtPlayer() {
     std::cout << "Player is hurt\n";
-    if (isHurt) {
+    if (isHurt || !gamePaused) {
         return;
     }
 
@@ -532,15 +538,11 @@ void GameWindow::hurtPlayer() {
     // Game ends when health is 0
     if (health <= 0) {
             pauseGame();
-            movingLeft = false;
-            movingRight = false;
-            movingUp = false;
-            movingDown = false;
 
             player->setPixmap(QPixmap(QString(":/images/miku_die/2.png")));
 
             QMessageBox::StandardButton reply;
-            reply = QMessageBox::information(this, tr("Game Over"), tr("You have lost all your lives!"));
+            reply = QMessageBox::information(this, tr("Game Over"), tr("Your Score is %1").arg(score));
             if (reply == QMessageBox::Ok) {
                 restartGame();
             }
@@ -549,6 +551,11 @@ void GameWindow::hurtPlayer() {
 
 void GameWindow::pauseGame() {
     gamePaused = true;
+
+    movingLeft = false;
+    movingRight = false;
+    movingUp = false;
+    movingDown = false;
     enemyMoveTimer->stop();
     stopBombSpawning();
     clearBombs();
