@@ -20,12 +20,15 @@ private slots:
 
     void on_signUpBtn_clicked();
 
+    void on_signInBtn_clicked();
+
 private:
     Ui::Login *ui;
 
 signals:
     void HomeClicked();
     void SignUpClicked();
+    void GameWindowClicked();
 };
 
 #endif // LOGIN_H

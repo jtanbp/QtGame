@@ -28,6 +28,7 @@ private:
 signals:
     void SignInClicked();
     void HomeClicked();
+    void GameWindowClicked();
 };
 
 #endif // SIGNUP_H

@@ -6,6 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include "ui_signup.h"
+#include "user.h"
+#include "Utility.h"
 
 SignUp::SignUp(QWidget *parent) :
     QWidget(parent),
@@ -84,20 +86,8 @@ void SignUp::on_signUpBtn_clicked()
         return;
     }
 
-//    AddUser
-//    rapidjson::Document d;
-//    d.SetObject();
-
-//    // Add data to the JSON document
-//    d.AddMember("name", "Geek", d.GetAllocator());
-//    d.AddMember("age", 30, d.GetAllocator());
-
-//    // Open the output file
-//    std::ofstream file("example.json");
-
-//    // Write the JSON data to the file
-//    FileWriteStream os(file, buffer, sizeof(buffer));
-//    Writer<FileWriteStream> writer(os);
-//    d.Accept(writer);
+    User user = User(firstName, lastName, userName, dob);
+    Utility::AddUser(user, password);
+    emit GameWindowClicked();
 }
 

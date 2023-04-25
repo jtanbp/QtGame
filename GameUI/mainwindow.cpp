@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QStackedWidget>
 #include "ui_mainwindow.h"
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&signupWidget, SIGNAL(SignInClicked()), this, SLOT(on_signInBtn_clicked()));
     connect(&signupWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
     connect(&gameWindowWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
+    connect(&signupWidget, SIGNAL(GameWindowClicked()), this, SLOT(on_playBtn_clicked()));
+    connect(&loginWidget, SIGNAL(GameWindowClicked()), this, SLOT(on_playBtn_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -35,19 +38,16 @@ void MainWindow::on_quitBtn_clicked()
     this -> close();
 }
 
-
 void MainWindow::on_signInBtn_clicked()
 {
     ui -> stackedWidget -> setCurrentIndex(1);
 }
-
 
 void MainWindow::on_scoresBtn_clicked()
 {
     ui -> stackedWidget -> setCurrentIndex(2);
 
 }
-
 
 void MainWindow::moveHome()
 {
@@ -62,8 +62,5 @@ void MainWindow::moveSignup()
 void MainWindow::on_playBtn_clicked()
 {
     ui -> stackedWidget -> setCurrentIndex(4);
-//    GameWindow* game  = new GameWindow();
-//    game -> show();
-//    this -> close();
 }
 

@@ -6,6 +6,7 @@
 #include "scores.h"
 #include "signup.h"
 #include "gamewindow.h"
+#include <string>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    std::string currentUser;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
