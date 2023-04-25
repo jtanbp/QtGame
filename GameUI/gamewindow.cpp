@@ -537,6 +537,7 @@ void GameWindow::hurtPlayer() {
             movingUp = false;
             movingDown = false;
 
+
             player->setPixmap(QPixmap(QString(":/images/miku_die/2.png")));
 
             QMessageBox::StandardButton reply;

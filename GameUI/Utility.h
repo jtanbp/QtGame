@@ -29,6 +29,10 @@ public:
     }
 
     bool AddUser(User user, std::string password) {
+        return false;
+    }
+
+    bool AddToMap(User user, std::string password) {
         auto encrypt = Encrypt(user, password);
         size_t userHash = std::get<0>(encrypt);
         size_t passHash = std::get<1>(encrypt);

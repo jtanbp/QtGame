@@ -84,6 +84,7 @@ void SignUp::on_signUpBtn_clicked()
         return;
     }
 
+//    AddUser
 //    rapidjson::Document d;
 //    d.SetObject();
 
