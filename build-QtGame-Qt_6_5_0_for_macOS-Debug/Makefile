@@ -52,17 +52,13 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../QtGame/bomb.cpp \
-		../QtGame/main.cpp \
-		../QtGame/mainwindow.cpp qrc_images.cpp \
-		moc_bomb.cpp \
-		moc_mainwindow.cpp
-OBJECTS       = bomb.o \
+SOURCES       = ../QtGame/gamewindow.cpp \
+		../QtGame/main.cpp qrc_images.cpp \
+		moc_gamewindow.cpp
+OBJECTS       = gamewindow.o \
 		main.o \
-		mainwindow.o \
 		qrc_images.o \
-		moc_bomb.o \
-		moc_mainwindow.o
+		moc_gamewindow.o
 DIST          = ../QtGame/images/fireball.png \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_pre.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/device_config.prf \
@@ -189,6 +185,7 @@ DIST          = ../QtGame/images/fireball.png \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/qt_config.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_post.prf \
+		../QtGame/.qmake.stash \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/toolchain.prf \
@@ -218,10 +215,8 @@ DIST          = ../QtGame/images/fireball.png \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exceptions.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/yacc.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/lex.prf \
-		../QtGame/QtGame.pro ../QtGame/bomb.h \
-		../QtGame/mainwindow.h ../QtGame/bomb.cpp \
-		../QtGame/main.cpp \
-		../QtGame/mainwindow.cpp
+		../QtGame/QtGame.pro ../QtGame/gamewindow.h ../QtGame/gamewindow.cpp \
+		../QtGame/main.cpp
 QMAKE_TARGET  = QtGame
 DESTDIR       = 
 TARGET        = QtGame.app/Contents/MacOS/QtGame
@@ -230,7 +225,7 @@ TARGET        = QtGame.app/Contents/MacOS/QtGame
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 12.3
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
-EXPORT__QMAKE_STASH_ = 
+EXPORT__QMAKE_STASH_ = /Users/junmingjin/MSD/CS6015/QTG/QtGame/build-QtGame-Qt_6_5_0_for_macOS-Debug/.qmake.stash
 EXPORT_VALID_ARCHS = x86_64 arm64
 EXPORT_DEFAULT_ARCHS = arm64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -371,6 +366,7 @@ Makefile: ../QtGame/QtGame.pro /Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-cla
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/qt_config.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/toolchain.prf \
@@ -531,6 +527,7 @@ Makefile: ../QtGame/QtGame.pro /Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-cla
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/qt_config.prf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang/qmake.conf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exclusive_builds.prf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.prf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/toolchain.prf:
@@ -595,8 +592,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../QtGame/images.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtGame/bomb.h ../QtGame/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtGame/bomb.cpp ../QtGame/main.cpp ../QtGame/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtGame/gamewindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtGame/gamewindow.cpp ../QtGame/main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -606,6 +603,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r QtGame.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -714,20 +712,10 @@ qrc_images.cpp: ../QtGame/images.qrc \
 		../QtGame/images/miku_shout/0.png
 	/Users/junmingjin/Qt/6.5.0/macos/libexec/rcc -name images --no-zstd ../QtGame/images.qrc -o qrc_images.cpp
 
-compiler_moc_header_make_all: moc_bomb.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_gamewindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_bomb.cpp moc_mainwindow.cpp
-moc_bomb.cpp: ../QtGame/bomb.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QObject \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qobject.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsPixmapItem \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
-		/Users/junmingjin/Qt/6.5.0/macos/libexec/moc
-	/Users/junmingjin/Qt/6.5.0/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang -I/Users/junmingjin/MSD/CS6015/QTG/QtGame/QtGame -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/junmingjin/Qt/6.5.0/macos/lib ../QtGame/bomb.h -o moc_bomb.cpp
-
-moc_mainwindow.cpp: ../QtGame/mainwindow.h \
+	-$(DEL_FILE) moc_gamewindow.cpp
+moc_gamewindow.cpp: ../QtGame/gamewindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
@@ -859,13 +847,8 @@ moc_mainwindow.cpp: ../QtGame/mainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qpixmap.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QMovie \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qmovie.h \
-		../QtGame/bomb.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QObject \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qobject.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsPixmapItem \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/junmingjin/Qt/6.5.0/macos/libexec/moc
-	/Users/junmingjin/Qt/6.5.0/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang -I/Users/junmingjin/MSD/CS6015/QTG/QtGame/QtGame -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/junmingjin/Qt/6.5.0/macos/lib ../QtGame/mainwindow.h -o moc_mainwindow.cpp
+	/Users/junmingjin/Qt/6.5.0/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang -I/Users/junmingjin/MSD/CS6015/QTG/QtGame/QtGame -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/junmingjin/Qt/6.5.0/macos/lib ../QtGame/gamewindow.h -o moc_gamewindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -885,295 +868,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean
 
 ####### Compile
 
-bomb.o: ../QtGame/bomb.cpp ../QtGame/bomb.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QObject \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qobject.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsPixmapItem \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
-		../QtGame/mainwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QtWidgets \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtwidgetsglobal.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractitemdelegate.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractitemview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractscrollarea.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractslider.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractspinbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qaccessiblewidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qaction.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qactiongroup.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qapplication.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qboxlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qbuttongroup.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcalendarwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcheckbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolordialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolormap.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolumnview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcombobox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcommandlinkbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcommonstyle.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcompleter.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdatawidgetmapper.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdatetimeedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdial.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialogbuttonbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdockwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdrawutil.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qerrormessage.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfiledialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfileiconprovider.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfilesystemmodel.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfocusframe.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfontcombobox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfontdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qformlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qframe.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgesture.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgesturerecognizer.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslinearlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsproxywidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicstransform.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicswidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgridlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgroupbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qheaderview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qinputdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qitemdelegate.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qitemeditorfactory.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qkeysequenceedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlabel.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlayoutitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlcdnumber.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlineedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlistview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlistwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmdiarea.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmdisubwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmenu.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmenubar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qplaintextedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qprogressbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qprogressdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qproxystyle.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qpushbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qrubberband.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollarea.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscroller.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollerproperties.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qshortcut.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsizegrip.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsizepolicy.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qslider.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qspinbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsplashscreen.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsplitter.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstackedlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstackedwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstatusbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyle.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleditemdelegate.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstylefactory.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleoption.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstylepainter.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleplugin.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsystemtrayicon.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtabbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtableview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtablewidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtabwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtextbrowser.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtextedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtooltip.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreeview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreewidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreewidgetitemiterator.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qundoview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwhatsthis.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidgetaction.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwizard.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QLabel \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTimer \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtimer.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QPixmap \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qpixmap.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QMovie \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qmovie.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QDebug \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qdebug.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QList \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qlist.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QFont \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qfont.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMessageBox \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QApplication \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QPushButton
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bomb.o ../QtGame/bomb.cpp
-
-main.o: ../QtGame/main.cpp /Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QApplication \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qapplication.h \
-		../QtGame/mainwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QtWidgets \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtwidgetsglobal.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractitemdelegate.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractitemview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractscrollarea.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractslider.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractspinbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qaccessiblewidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qaction.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qactiongroup.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qboxlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qbuttongroup.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcalendarwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcheckbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolordialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolormap.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolumnview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcombobox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcommandlinkbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcommonstyle.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcompleter.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdatawidgetmapper.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdatetimeedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdial.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialogbuttonbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdockwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdrawutil.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qerrormessage.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfiledialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfileiconprovider.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfilesystemmodel.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfocusframe.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfontcombobox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfontdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qformlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qframe.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgesture.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgesturerecognizer.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslinearlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsproxywidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicstransform.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicswidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgridlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgroupbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qheaderview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qinputdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qitemdelegate.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qitemeditorfactory.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qkeysequenceedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlabel.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlayoutitem.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlcdnumber.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlineedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlistview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlistwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmdiarea.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmdisubwindow.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmenu.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmenubar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qplaintextedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qprogressbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qprogressdialog.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qproxystyle.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qpushbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qrubberband.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollarea.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscroller.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollerproperties.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qshortcut.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsizegrip.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsizepolicy.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qslider.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qspinbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsplashscreen.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsplitter.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstackedlayout.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstackedwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstatusbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyle.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleditemdelegate.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstylefactory.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleoption.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstylepainter.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleplugin.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsystemtrayicon.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtabbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtableview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtablewidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtabwidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtextbrowser.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtextedit.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbar.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbox.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbutton.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtooltip.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreeview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreewidget.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreewidgetitemiterator.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qundoview.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwhatsthis.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidgetaction.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwizard.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QLabel \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTimer \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtimer.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QPixmap \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qpixmap.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QMovie \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qmovie.h \
-		../QtGame/bomb.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QObject \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qobject.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsPixmapItem \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsScene
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QtGame/main.cpp
-
-mainwindow.o: ../QtGame/mainwindow.cpp ../QtGame/mainwindow.h \
+gamewindow.o: ../QtGame/gamewindow.cpp ../QtGame/gamewindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
@@ -1305,25 +1000,152 @@ mainwindow.o: ../QtGame/mainwindow.cpp ../QtGame/mainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qpixmap.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QMovie \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qmovie.h \
-		../QtGame/bomb.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QObject \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qobject.h \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsPixmapItem \
-		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QVBoxLayout \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QPushButton \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QKeyEvent \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qevent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QtGame/mainwindow.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamewindow.o ../QtGame/gamewindow.cpp
+
+main.o: ../QtGame/main.cpp /Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QApplication \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qapplication.h \
+		../QtGame/gamewindow.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QMainWindow \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QtWidgets \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtwidgetsglobal.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractbutton.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractitemdelegate.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractitemview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractscrollarea.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractslider.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qabstractspinbox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qaccessiblewidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qaction.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qactiongroup.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qbuttongroup.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcalendarwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcheckbox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolordialog.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolormap.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcolumnview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcombobox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcommandlinkbutton.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcommonstyle.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qcompleter.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdatawidgetmapper.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdatetimeedit.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdial.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialog.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdialogbuttonbox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdockwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qdrawutil.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qerrormessage.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfiledialog.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfileiconprovider.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfilesystemmodel.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfocusframe.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfontcombobox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qfontdialog.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qformlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qframe.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgesture.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgesturerecognizer.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicslinearlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsproxywidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicstransform.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgraphicswidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qgroupbox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qheaderview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qinputdialog.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qitemdelegate.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qitemeditorfactory.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qkeysequenceedit.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlabel.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlayoutitem.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlcdnumber.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlineedit.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlistview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qlistwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmdiarea.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmdisubwindow.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmenu.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmenubar.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qplaintextedit.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qprogressbar.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qprogressdialog.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qproxystyle.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qrubberband.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollbar.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscroller.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qscrollerproperties.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qshortcut.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsizegrip.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsizepolicy.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qslider.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qspinbox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsplashscreen.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsplitter.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstackedlayout.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstackedwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstatusbar.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyle.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleditemdelegate.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstylefactory.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleoption.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstylepainter.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qstyleplugin.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qsystemtrayicon.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtabbar.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtableview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtablewidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtabwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtextbrowser.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtextedit.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbar.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbox.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtoolbutton.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtooltip.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreeview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreewidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtreewidgetitemiterator.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qundoview.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwhatsthis.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidgetaction.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwizard.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QLabel \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTimer \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtimer.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QPixmap \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qpixmap.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QMovie \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qmovie.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QtGame/main.cpp
 
 qrc_images.o: qrc_images.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_images.o qrc_images.cpp
 
-moc_bomb.o: moc_bomb.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_bomb.o moc_bomb.cpp
-
-moc_mainwindow.o: moc_mainwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+moc_gamewindow.o: moc_gamewindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gamewindow.o moc_gamewindow.cpp
 
 ####### Install
 

@@ -1,0 +1,8 @@
+Name,Score
+Hello, 1000
+Rich,10020
+Lakers,10230
+Warriors,20102
+Thunders,30020
+Magics,10200
+Rocks,22003
