@@ -31,6 +31,7 @@ private slots:
     void moveSignup();
 
     void on_playBtn_clicked();
+    void on_signUpBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

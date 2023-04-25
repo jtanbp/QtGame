@@ -276,6 +276,7 @@ DIST          = ../GameUI/UserData.json \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/qt_config.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_post.prf \
+		../GameUI/.qmake.stash \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/toolchain.prf \
@@ -325,7 +326,7 @@ TARGET        = GameUI.app/Contents/MacOS/GameUI
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 12.3
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
-EXPORT__QMAKE_STASH_ = 
+EXPORT__QMAKE_STASH_ = /Users/junmingjin/MSD/CS6015/QTG/QtGame/build-GameUI-Qt_6_5_0_for_macOS-Debug/.qmake.stash
 EXPORT_VALID_ARCHS = x86_64 arm64
 EXPORT_DEFAULT_ARCHS = arm64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -466,6 +467,7 @@ Makefile: ../GameUI/GameUI.pro /Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-cla
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/qt_config.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/toolchain.prf \
@@ -626,6 +628,7 @@ Makefile: ../GameUI/GameUI.pro /Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-cla
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/qt_config.prf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang/qmake.conf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exclusive_builds.prf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/mac/sdk.prf:
 /Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/toolchain.prf:
@@ -702,6 +705,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r GameUI.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -949,6 +953,12 @@ moc_mainwindow.cpp: ../GameUI/mainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
 		../GameUI/scores.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
 		../GameUI/signup.h \
 		../GameUI/gamewindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QtWidgets \
@@ -1084,6 +1094,12 @@ moc_mainwindow.cpp: ../GameUI/mainwindow.h \
 moc_scores.cpp: ../GameUI/scores.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
 		/Users/junmingjin/Qt/6.5.0/macos/libexec/moc
 	/Users/junmingjin/Qt/6.5.0/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/junmingjin/Qt/6.5.0/macos/mkspecs/macx-clang -I/Users/junmingjin/MSD/CS6015/QTG/QtGame/GameUI -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers -I/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.1.6/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/junmingjin/Qt/6.5.0/macos/lib ../GameUI/scores.h -o moc_scores.cpp
 
@@ -1279,6 +1295,12 @@ main.o: ../GameUI/main.cpp ../GameUI/mainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
 		../GameUI/scores.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
 		../GameUI/signup.h \
 		../GameUI/gamewindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QtWidgets \
@@ -1418,6 +1440,12 @@ mainwindow.o: ../GameUI/mainwindow.cpp ../GameUI/mainwindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
 		../GameUI/scores.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
 		../GameUI/signup.h \
 		../GameUI/gamewindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QtWidgets \
@@ -1554,6 +1582,12 @@ mainwindow.o: ../GameUI/mainwindow.cpp ../GameUI/mainwindow.h \
 scores.o: ../GameUI/scores.cpp ../GameUI/scores.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
 		ui_scores.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scores.o ../GameUI/scores.cpp
 

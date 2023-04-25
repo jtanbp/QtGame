@@ -46,6 +46,10 @@ void MainWindow::on_scoresBtn_clicked()
     ui -> stackedWidget -> setCurrentIndex(2);
 
 }
+void MainWindow::on_signUpBtn_clicked()
+{
+    ui -> stackedWidget -> setCurrentIndex(3);
+}
 
 
 void MainWindow::moveHome()
