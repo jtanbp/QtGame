@@ -18,6 +18,7 @@ SOURCES += \
     user.cpp
 
 HEADERS += \
+    Utility.h \
     gamewindow.h \
     login.h \
     mainwindow.h \

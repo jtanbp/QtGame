@@ -14,6 +14,9 @@ class User
 {
 public:
     User(std::string fName, std::string lName, std::string username, std::string dob);
+    std::string firstName;
+    std::string lastName;
+    std::string userName;
     std::string getDoB();
     int getRanking();
     Score getHighScore();
@@ -22,9 +25,6 @@ public:
     std::vector<Score> getScoreHistory();
 
 private:
-    std::string firstName;
-    std::string lastName;
-    std::string userName;
     std::string dateOfBirth;
     Score highScore;
     int ranking;
