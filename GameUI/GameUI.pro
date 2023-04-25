@@ -15,10 +15,13 @@ SOURCES += \
     mainwindow.cpp \
     scores.cpp \
     signup.cpp \
-    user.cpp
+    user.cpp \
+    utility.cpp
 
 HEADERS += \
+    Utility.h \
     gamewindow.h \
+    json.hpp \
     login.h \
     mainwindow.h \
     scores.h \
@@ -37,7 +40,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    UserData.json \
     gameBkg.jpg \
     images/background.gif \
     images/black.png \
@@ -110,7 +112,9 @@ DISTFILES += \
     images/musicnote/6.png \
     images/musicnote/7.png \
     images/musicnote/8.png \
-    images/musicnote/9.png
+    images/musicnote/9.png \
+    passwordMap.txt \
+    userData.txt
 
 RESOURCES += \
     Resources.qrc

@@ -28,7 +28,11 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
+    void setDifficultyEasy();
+    void setDifficultyMedium();
+    void setDifficultyHard();
     void updateAnimation();
+    void gameLogout();
 
 private:
     QLabel *gameInfo;
@@ -99,6 +103,9 @@ private:
     void hurtPlayer();
     void pauseGame();
     void restartGame();
+
+signals:
+    void HomeClicked();
 };
 
 #endif // GAMEWINDOW_H

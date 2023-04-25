@@ -42,20 +42,22 @@ static constexpr auto qt_meta_stringdata_CLASSSignUpENDCLASS = QtMocHelpers::str
     "SignInClicked",
     "",
     "HomeClicked",
+    "GameWindowClicked",
     "on_signInBtn_clicked",
     "on_mainMenuBtn_clicked",
     "on_signUpBtn_clicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSSignUpENDCLASS_t {
-    uint offsetsAndSizes[14];
+    uint offsetsAndSizes[16];
     char stringdata0[7];
     char stringdata1[14];
     char stringdata2[1];
     char stringdata3[12];
-    char stringdata4[21];
-    char stringdata5[23];
-    char stringdata6[21];
+    char stringdata4[18];
+    char stringdata5[21];
+    char stringdata6[23];
+    char stringdata7[21];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSSignUpENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -65,14 +67,16 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSSignUpENDCLASS_t qt_meta_string
         QT_MOC_LITERAL(7, 13),  // "SignInClicked"
         QT_MOC_LITERAL(21, 0),  // ""
         QT_MOC_LITERAL(22, 11),  // "HomeClicked"
-        QT_MOC_LITERAL(34, 20),  // "on_signInBtn_clicked"
-        QT_MOC_LITERAL(55, 22),  // "on_mainMenuBtn_clicked"
-        QT_MOC_LITERAL(78, 20)   // "on_signUpBtn_clicked"
+        QT_MOC_LITERAL(34, 17),  // "GameWindowClicked"
+        QT_MOC_LITERAL(52, 20),  // "on_signInBtn_clicked"
+        QT_MOC_LITERAL(73, 22),  // "on_mainMenuBtn_clicked"
+        QT_MOC_LITERAL(96, 20)   // "on_signUpBtn_clicked"
     },
     "SignUp",
     "SignInClicked",
     "",
     "HomeClicked",
+    "GameWindowClicked",
     "on_signInBtn_clicked",
     "on_mainMenuBtn_clicked",
     "on_signUpBtn_clicked"
@@ -87,23 +91,25 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSSignUpENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x06,    1 /* Public */,
-       3,    0,   45,    2, 0x06,    2 /* Public */,
+       1,    0,   50,    2, 0x06,    1 /* Public */,
+       3,    0,   51,    2, 0x06,    2 /* Public */,
+       4,    0,   52,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,   46,    2, 0x08,    3 /* Private */,
-       5,    0,   47,    2, 0x08,    4 /* Private */,
-       6,    0,   48,    2, 0x08,    5 /* Private */,
+       5,    0,   53,    2, 0x08,    4 /* Private */,
+       6,    0,   54,    2, 0x08,    5 /* Private */,
+       7,    0,   55,    2, 0x08,    6 /* Private */,
 
  // signals: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -128,6 +134,8 @@ Q_CONSTINIT const QMetaObject SignUp::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'HomeClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'GameWindowClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_signInBtn_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_mainMenuBtn_clicked'
@@ -146,9 +154,10 @@ void SignUp::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         switch (_id) {
         case 0: _t->SignInClicked(); break;
         case 1: _t->HomeClicked(); break;
-        case 2: _t->on_signInBtn_clicked(); break;
-        case 3: _t->on_mainMenuBtn_clicked(); break;
-        case 4: _t->on_signUpBtn_clicked(); break;
+        case 2: _t->GameWindowClicked(); break;
+        case 3: _t->on_signInBtn_clicked(); break;
+        case 4: _t->on_mainMenuBtn_clicked(); break;
+        case 5: _t->on_signUpBtn_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -164,6 +173,13 @@ void SignUp::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             using _t = void (SignUp::*)();
             if (_t _q_method = &SignUp::HomeClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (SignUp::*)();
+            if (_t _q_method = &SignUp::GameWindowClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 2;
                 return;
             }
         }
@@ -190,13 +206,13 @@ int SignUp::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }
@@ -211,5 +227,11 @@ void SignUp::SignInClicked()
 void SignUp::HomeClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+}
+
+// SIGNAL 2
+void SignUp::GameWindowClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 QT_WARNING_POP

@@ -13,8 +13,8 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +24,6 @@ class Ui_Login
 public:
     QFrame *line;
     QFrame *line_4;
-    QTextEdit *usrNmTxt;
     QPushButton *signInBtn;
     QPushButton *signUpBtn;
     QLabel *label_2;
@@ -32,9 +31,11 @@ public:
     QLabel *label_3;
     QFrame *line_3;
     QFrame *line_2;
-    QTextEdit *passTxt;
     QPushButton *mainMenuBtn;
     QLabel *label_4;
+    QLineEdit *errorLoginNote;
+    QLineEdit *usrNmTxt;
+    QLineEdit *passTxt;
 
     void setupUi(QWidget *Login)
     {
@@ -51,11 +52,6 @@ public:
         line_4->setGeometry(QRect(230, 950, 551, 20));
         line_4->setFrameShape(QFrame::HLine);
         line_4->setFrameShadow(QFrame::Sunken);
-        usrNmTxt = new QTextEdit(Login);
-        usrNmTxt->setObjectName("usrNmTxt");
-        usrNmTxt->setGeometry(QRect(520, 470, 221, 51));
-        usrNmTxt->setStyleSheet(QString::fromUtf8("background-color: rgba(82, 217, 255, 128);\n"
-"border: 5px solid grey;"));
         signInBtn = new QPushButton(Login);
         signInBtn->setObjectName("signInBtn");
         signInBtn->setGeometry(QRect(400, 710, 211, 71));
@@ -118,17 +114,28 @@ public:
         line_2->setGeometry(QRect(770, 380, 20, 581));
         line_2->setFrameShape(QFrame::VLine);
         line_2->setFrameShadow(QFrame::Sunken);
-        passTxt = new QTextEdit(Login);
-        passTxt->setObjectName("passTxt");
-        passTxt->setGeometry(QRect(520, 600, 221, 51));
-        passTxt->setStyleSheet(QString::fromUtf8("background-color: rgba(82, 217, 255, 128);\n"
-"border: 5px solid grey;"));
         mainMenuBtn = new QPushButton(Login);
         mainMenuBtn->setObjectName("mainMenuBtn");
         mainMenuBtn->setGeometry(QRect(670, 920, 100, 32));
         label_4 = new QLabel(Login);
         label_4->setObjectName("label_4");
         label_4->setGeometry(QRect(290, 840, 71, 20));
+        errorLoginNote = new QLineEdit(Login);
+        errorLoginNote->setObjectName("errorLoginNote");
+        errorLoginNote->setGeometry(QRect(230, 330, 551, 21));
+        errorLoginNote->setStyleSheet(QString::fromUtf8("background-color: rgba(255, 255, 255, 0);\n"
+"color: red;"));
+        errorLoginNote->setReadOnly(true);
+        usrNmTxt = new QLineEdit(Login);
+        usrNmTxt->setObjectName("usrNmTxt");
+        usrNmTxt->setGeometry(QRect(532, 470, 191, 51));
+        usrNmTxt->setStyleSheet(QString::fromUtf8("background-color: rgba(82, 217, 255, 128);\n"
+"border: 5px solid grey;"));
+        passTxt = new QLineEdit(Login);
+        passTxt->setObjectName("passTxt");
+        passTxt->setGeometry(QRect(532, 600, 191, 51));
+        passTxt->setStyleSheet(QString::fromUtf8("background-color: rgba(82, 217, 255, 128);\n"
+"border: 5px solid grey;"));
 
         retranslateUi(Login);
 

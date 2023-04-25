@@ -8,26 +8,18 @@ User::User(std::string fName, std::string lName, std::string username, std::stri
     this -> dateOfBirth = dob;
 }
 
-std::string User::getDoB() {
-    return this -> dateOfBirth;
+User::User(std::string username)
+{
+    this -> userName = username;
 }
+//void User::updateHighScore(Score score) {
+//    this -> highScore = score;
+//}
 
-int User::getRanking() {
-    return this -> ranking;
-}
+//void User::updateRanking() {
 
-Score User::getHighScore() {
-    return this -> highScore;
-}
+//}
 
-void User::updateHighScore(Score score) {
-    this -> highScore = score;
-}
-
-void User::updateRanking() {
-
-}
-
-std::vector<Score> User::getScoreHistory() {
-    return this -> scoreHistory;
-}
+//std::vector<Score> User::getScoreHistory() {
+//    return this -> scoreHistory;
+//}

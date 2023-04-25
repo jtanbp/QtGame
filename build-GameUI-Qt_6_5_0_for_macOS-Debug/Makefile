@@ -58,7 +58,8 @@ SOURCES       = ../GameUI/gamewindow.cpp \
 		../GameUI/mainwindow.cpp \
 		../GameUI/scores.cpp \
 		../GameUI/signup.cpp \
-		../GameUI/user.cpp qrc_Resources.cpp \
+		../GameUI/user.cpp \
+		../GameUI/utility.cpp qrc_Resources.cpp \
 		moc_gamewindow.cpp \
 		moc_login.cpp \
 		moc_mainwindow.cpp \
@@ -71,14 +72,14 @@ OBJECTS       = gamewindow.o \
 		scores.o \
 		signup.o \
 		user.o \
+		utility.o \
 		qrc_Resources.o \
 		moc_gamewindow.o \
 		moc_login.o \
 		moc_mainwindow.o \
 		moc_scores.o \
 		moc_signup.o
-DIST          = ../GameUI/UserData.json \
-		../GameUI/gameBkg.jpg \
+DIST          = ../GameUI/gameBkg.jpg \
 		../GameUI/images/background.gif \
 		../GameUI/images/black.png \
 		../GameUI/images/bomb/0.png \
@@ -151,6 +152,8 @@ DIST          = ../GameUI/UserData.json \
 		../GameUI/images/musicnote/7.png \
 		../GameUI/images/musicnote/8.png \
 		../GameUI/images/musicnote/9.png \
+		../GameUI/passwordMap.txt \
+		../GameUI/userData.txt \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/spec_pre.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/device_config.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/common/unix.conf \
@@ -306,7 +309,9 @@ DIST          = ../GameUI/UserData.json \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/exceptions.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/yacc.prf \
 		/Users/junmingjin/Qt/6.5.0/macos/mkspecs/features/lex.prf \
-		../GameUI/GameUI.pro ../GameUI/gamewindow.h \
+		../GameUI/GameUI.pro ../GameUI/Utility.h \
+		../GameUI/gamewindow.h \
+		../GameUI/json.hpp \
 		../GameUI/login.h \
 		../GameUI/mainwindow.h \
 		../GameUI/scores.h \
@@ -317,7 +322,8 @@ DIST          = ../GameUI/UserData.json \
 		../GameUI/mainwindow.cpp \
 		../GameUI/scores.cpp \
 		../GameUI/signup.cpp \
-		../GameUI/user.cpp
+		../GameUI/user.cpp \
+		../GameUI/utility.cpp
 QMAKE_TARGET  = GameUI
 DESTDIR       = 
 TARGET        = GameUI.app/Contents/MacOS/GameUI
@@ -693,8 +699,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../GameUI/Resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../GameUI/gamewindow.h ../GameUI/login.h ../GameUI/mainwindow.h ../GameUI/scores.h ../GameUI/signup.h ../GameUI/user.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../GameUI/gamewindow.cpp ../GameUI/login.cpp ../GameUI/main.cpp ../GameUI/mainwindow.cpp ../GameUI/scores.cpp ../GameUI/signup.cpp ../GameUI/user.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../GameUI/Utility.h ../GameUI/gamewindow.h ../GameUI/json.hpp ../GameUI/login.h ../GameUI/mainwindow.h ../GameUI/scores.h ../GameUI/signup.h ../GameUI/user.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../GameUI/gamewindow.cpp ../GameUI/login.cpp ../GameUI/main.cpp ../GameUI/mainwindow.cpp ../GameUI/scores.cpp ../GameUI/signup.cpp ../GameUI/user.cpp ../GameUI/utility.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../GameUI/login.ui ../GameUI/mainwindow.ui ../GameUI/scores.ui ../GameUI/signup.ui $(DISTDIR)/
 
 
@@ -765,6 +771,23 @@ qrc_Resources.cpp: ../GameUI/Resources.qrc \
 		../GameUI/images/miku_running/5.png \
 		../GameUI/images/miku_running/0.png \
 		../GameUI/images/musicnote/2.png \
+		../GameUI/images/musicnote/11.png \
+		../GameUI/images/musicnote/17.png \
+		../GameUI/images/musicnote/3.png \
+		../GameUI/images/musicnote/4.png \
+		../GameUI/images/musicnote/7.png \
+		../GameUI/images/musicnote/6.png \
+		../GameUI/images/musicnote/14.png \
+		../GameUI/images/musicnote/1.png \
+		../GameUI/images/musicnote/13.png \
+		../GameUI/images/musicnote/16.png \
+		../GameUI/images/musicnote/8.png \
+		../GameUI/images/musicnote/10.png \
+		../GameUI/images/musicnote/15.png \
+		../GameUI/images/musicnote/5.png \
+		../GameUI/images/musicnote/0.png \
+		../GameUI/images/musicnote/12.png \
+		../GameUI/images/musicnote/9.png \
 		../GameUI/images/miku_jump/2.png \
 		../GameUI/images/miku_jump/3.png \
 		../GameUI/images/miku_jump/4.png \
@@ -774,32 +797,14 @@ qrc_Resources.cpp: ../GameUI/Resources.qrc \
 		../GameUI/images/miku_jump/8.png \
 		../GameUI/images/miku_jump/5.png \
 		../GameUI/images/miku_jump/0.png \
-		../GameUI/musicnote/2.png \
-		../GameUI/musicnote/11.png \
-		../GameUI/musicnote/17.png \
-		../GameUI/musicnote/3.png \
-		../GameUI/musicnote/4.png \
-		../GameUI/musicnote/7.png \
-		../GameUI/musicnote/6.png \
-		../GameUI/musicnote/14.png \
-		../GameUI/musicnote/1.png \
-		../GameUI/musicnote/13.png \
-		../GameUI/musicnote/16.png \
-		../GameUI/musicnote/8.png \
-		../GameUI/musicnote/10.png \
-		../GameUI/musicnote/15.png \
-		../GameUI/musicnote/5.png \
-		../GameUI/musicnote/0.png \
-		../GameUI/musicnote/12.png \
-		../GameUI/musicnote/9.png \
-		../GameUI/miku_shout/2.png \
-		../GameUI/miku_shout/3.png \
-		../GameUI/miku_shout/4.png \
-		../GameUI/miku_shout/7.png \
-		../GameUI/miku_shout/6.png \
-		../GameUI/miku_shout/1.png \
-		../GameUI/miku_shout/5.png \
-		../GameUI/miku_shout/0.png
+		../GameUI/images/miku_shout/2.png \
+		../GameUI/images/miku_shout/3.png \
+		../GameUI/images/miku_shout/4.png \
+		../GameUI/images/miku_shout/7.png \
+		../GameUI/images/miku_shout/6.png \
+		../GameUI/images/miku_shout/1.png \
+		../GameUI/images/miku_shout/5.png \
+		../GameUI/images/miku_shout/0.png
 	/Users/junmingjin/Qt/6.5.0/macos/libexec/rcc -name Resources --no-zstd ../GameUI/Resources.qrc -o qrc_Resources.cpp
 
 compiler_moc_header_make_all: moc_gamewindow.cpp moc_login.cpp moc_mainwindow.cpp moc_scores.cpp moc_signup.cpp
@@ -1276,6 +1281,16 @@ gamewindow.o: ../GameUI/gamewindow.cpp ../GameUI/gamewindow.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qpixmap.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QMovie \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/qmovie.h \
+		../GameUI/mainwindow.h \
+		../GameUI/login.h \
+		../GameUI/scores.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QVector \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h \
+		../GameUI/signup.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QVBoxLayout \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QPushButton \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtGui.framework/Headers/QKeyEvent \
@@ -1285,7 +1300,13 @@ gamewindow.o: ../GameUI/gamewindow.cpp ../GameUI/gamewindow.h \
 login.o: ../GameUI/login.cpp ../GameUI/login.h \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/junmingjin/Qt/6.5.0/macos/lib/QtWidgets.framework/Headers/qwidget.h \
-		ui_login.h
+		ui_login.h \
+		../GameUI/Utility.h \
+		../GameUI/user.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o login.o ../GameUI/login.cpp
 
 main.o: ../GameUI/main.cpp ../GameUI/mainwindow.h \
@@ -1621,11 +1642,25 @@ signup.o: ../GameUI/signup.cpp ../GameUI/signup.h \
 		../GameUI/rapidjson/internal/dtoa.h \
 		../GameUI/rapidjson/internal/itoa.h \
 		../GameUI/rapidjson/stringbuffer.h \
-		ui_signup.h
+		ui_signup.h \
+		../GameUI/user.h \
+		../GameUI/Utility.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signup.o ../GameUI/signup.cpp
 
 user.o: ../GameUI/user.cpp ../GameUI/user.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o user.o ../GameUI/user.cpp
+
+utility.o: ../GameUI/utility.cpp ../GameUI/utility.h \
+		../GameUI/user.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/QTextStream \
+		/Users/junmingjin/Qt/6.5.0/macos/lib/QtCore.framework/Headers/qtextstream.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utility.o ../GameUI/utility.cpp
 
 qrc_Resources.o: qrc_Resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_Resources.o qrc_Resources.cpp

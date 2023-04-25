@@ -58,7 +58,6 @@ void Scores::showTopScores()
     ui->topScoresLabel->setText(topScoresText);
 }
 
-
 void Scores::on_mainMenuScoreBtn_clicked()
 {
     emit HomeClicked();

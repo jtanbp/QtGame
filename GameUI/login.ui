@@ -39,20 +39,6 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QTextEdit" name="usrNmTxt">
-   <property name="geometry">
-    <rect>
-     <x>520</x>
-     <y>470</y>
-     <width>221</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgba(82, 217, 255, 128);
-border: 5px solid grey;</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="signInBtn">
    <property name="geometry">
     <rect>
@@ -245,20 +231,6 @@ background-color: rgb(182, 75, 28);</string>
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QTextEdit" name="passTxt">
-   <property name="geometry">
-    <rect>
-     <x>520</x>
-     <y>600</y>
-     <width>221</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgba(82, 217, 255, 128);
-border: 5px solid grey;</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="mainMenuBtn">
    <property name="geometry">
     <rect>
@@ -283,6 +255,51 @@ border: 5px solid grey;</string>
    </property>
    <property name="text">
     <string>New user?</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="errorLoginNote">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>330</y>
+     <width>551</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: red;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="usrNmTxt">
+   <property name="geometry">
+    <rect>
+     <x>532</x>
+     <y>470</y>
+     <width>191</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(82, 217, 255, 128);
+border: 5px solid grey;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="passTxt">
+   <property name="geometry">
+    <rect>
+     <x>532</x>
+     <y>600</y>
+     <width>191</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(82, 217, 255, 128);
+border: 5px solid grey;</string>
    </property>
   </widget>
  </widget>
