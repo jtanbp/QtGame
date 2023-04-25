@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QPixmap bkgnd = QPixmap("/Users/avishekchoudhury/QT3/QTGame1/GameUI/gameBkg.jpg").scaled(this -> size(), Qt::IgnoreAspectRatio);
+    QPixmap bkgnd = QPixmap("/Users/avishekchoudhury/Desktop/Project/QtGame/GameUI/gameBkg.jpg").scaled(this -> size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stackedWidget -> insertWidget(1, &loginWidget);
     ui -> stackedWidget -> insertWidget(2, &scoresWidget);
     ui -> stackedWidget -> insertWidget(3, &signupWidget);
-//    ui -> stackedWidget -> insertWidget(4, &gameWindowWidget);
+    ui -> stackedWidget -> insertWidget(4, &gameWindowWidget);
 
     connect(&loginWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
     connect(&scoresWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
@@ -60,9 +60,9 @@ void MainWindow::moveSignup()
 
 void MainWindow::on_playBtn_clicked()
 {
-//    ui -> stackedWidget -> setCurrentIndex(4);
-    GameWindow* game  = new GameWindow();
-    game -> show();
-    this -> close();
+    ui -> stackedWidget -> setCurrentIndex(4);
+//    GameWindow* game  = new GameWindow();
+//    game -> show();
+//    this -> close();
 }
 

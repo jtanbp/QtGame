@@ -72,5 +72,6 @@
         <file>musicnote/15.png</file>
         <file>musicnote/16.png</file>
         <file>musicnote/17.png</file>
+        <file>images/musicnote/2.png</file>
     </qresource>
 </RCC>
