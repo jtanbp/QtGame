@@ -30,6 +30,7 @@ protected:
 private slots:
     void setDifficulty(difficulty_t difficulty_level);
     void updateAnimation();
+    void gameLogout();
 
 private:
     QLabel *gameInfo;
@@ -100,6 +101,9 @@ private:
     void hurtPlayer();
     void pauseGame();
     void restartGame();
+
+signals:
+    void HomeClicked();
 };
 
 #endif // GAMEWINDOW_H

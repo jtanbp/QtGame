@@ -1,4 +1,5 @@
 #include "gamewindow.h"
+#include "mainwindow.h"
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QKeyEvent>
@@ -25,7 +26,7 @@ GameWindow::GameWindow(QWidget *parent)
     isShouting(false),
     damageBuffer(false)
 {
-    setFixedSize(900, 600);
+    setFixedSize(900, 800);
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
     setCentralWidget(new QWidget());
@@ -161,6 +162,12 @@ void GameWindow::createGameInfo() {
 //    connect(easyButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_easy)));
 //    connect(mediumButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_medium)));
 //    connect(hardButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_hard)));
+    connect(logoutButton, SIGNAL(clicked()), this, SLOT(gameLogout()));
+}
+
+void GameWindow::gameLogout() {
+    pauseGame();
+    emit HomeClicked();
 }
 
 void GameWindow::setDifficulty(difficulty_t difficulty_level) {

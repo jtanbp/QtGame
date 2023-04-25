@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&loginWidget, SIGNAL(SignUpClicked()), this, SLOT(moveSignup()));
     connect(&signupWidget, SIGNAL(SignInClicked()), this, SLOT(on_signInBtn_clicked()));
     connect(&signupWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
+    connect(&gameWindowWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
 }
 
 MainWindow::~MainWindow()
