@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>853</width>
-    <height>909</height>
+    <height>733</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,11 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 35pt &quot;Academy Engraved LET&quot;;
-background-color: rgb(182, 75, 28);</string>
+    <string notr="true">QLabel {
+    font-family: &quot;Academy Engraved LET&quot;;
+    font-size: 35pt;
+    background-color: rgb(182, 75, 28);
+}</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -80,8 +83,8 @@ background-color: rgb(182, 75, 28);</string>
   <widget class="QLabel" name="topScoresLabel">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>220</y>
+     <x>260</x>
+     <y>190</y>
      <width>311</width>
      <height>361</height>
     </rect>
@@ -92,10 +95,46 @@ background-color: rgb(182, 75, 28);</string>
      <height>361</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Arial&quot;;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffcc00, stop: 1 #f6ad42);
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 4px;
+    text-shadow: 1px 1px 2px #666;
+}</string>
+   </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:64pt; font-weight:700; font-style:italic;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
+  <widget class="QLabel" name="backgroundLabel">
+   <property name="geometry">
+    <rect>
+     <x>7</x>
+     <y>5</y>
+     <width>831</width>
+     <height>831</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(/Users/junmingjin/MSD/CS6015/QTG/QtGame/GameUI/gameBkg.jpg) 0 0 0 0 stretch stretch;</string>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <zorder>backgroundLabel</zorder>
+  <zorder>label</zorder>
+  <zorder>mainMenuScoreBtn</zorder>
+  <zorder>line_4</zorder>
+  <zorder>topScoresLabel</zorder>
  </widget>
  <resources/>
  <connections/>
