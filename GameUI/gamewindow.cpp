@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QKeyEvent>
 #include <iostream>
+#include <ctime>
 
 GameWindow::GameWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -27,6 +28,8 @@ GameWindow::GameWindow(QWidget *parent)
     damageBuffer(false)
 {
     setFixedSize(900, 800);
+
+    srand(time(0));
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
     setCentralWidget(new QWidget());
@@ -56,7 +59,7 @@ GameWindow::GameWindow(QWidget *parent)
     createEnemy();
     createBombs();
     restartGame();
-    //pauseGame();
+    pauseGame();
     //startBombSpawning();
 }
 
@@ -67,7 +70,7 @@ GameWindow::~GameWindow() {
 }
 
 void GameWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->isAutoRepeat() || isShouting || isHurt || gamePaused) {
+    if (event->isAutoRepeat() || isShouting || gamePaused) {
         return;
     }
 
@@ -144,9 +147,9 @@ void GameWindow::createGameInfo() {
     QPushButton *hardButton = new QPushButton("Hard");
     QPushButton *logoutButton = new QPushButton("Log Out");
 
-    easyButton->setFocusPolicy(Qt::NoFocus);
-    mediumButton->setFocusPolicy(Qt::NoFocus);
-    hardButton->setFocusPolicy(Qt::NoFocus);
+    //easyButton->setFocusPolicy(Qt::NoFocus);
+    //mediumButton->setFocusPolicy(Qt::NoFocus);
+    //hardButton->setFocusPolicy(Qt::NoFocus);
     logoutButton->setFocusPolicy(Qt::NoFocus);
 
     gameInfoLayout->addWidget(playerIcon);
@@ -159,9 +162,9 @@ void GameWindow::createGameInfo() {
     gameInfoLayout->addWidget(hardButton);
     gameInfoLayout->addWidget(logoutButton);
 
-//    connect(easyButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_easy)));
-//    connect(mediumButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_medium)));
-//    connect(hardButton, SIGNAL(clicked()), this, SLOT(setDifficulty(difficulty_hard)));
+    connect(easyButton, SIGNAL(clicked()), this, SLOT(setDifficultyEasy()));
+    connect(mediumButton, SIGNAL(clicked()), this, SLOT(setDifficultyMedium()));
+    connect(hardButton, SIGNAL(clicked()), this, SLOT(setDifficultyHard()));
     connect(logoutButton, SIGNAL(clicked()), this, SLOT(gameLogout()));
 }
 
@@ -170,9 +173,21 @@ void GameWindow::gameLogout() {
     emit HomeClicked();
 }
 
-void GameWindow::setDifficulty(difficulty_t difficulty_level) {
-    //pauseGame();
-    difficulty = difficulty_level;
+void GameWindow::setDifficultyEasy() {
+    pauseGame();
+    difficulty = difficulty_easy;
+    restartGame();
+}
+
+void GameWindow::setDifficultyMedium() {
+    pauseGame();
+    difficulty = difficulty_medium;
+    restartGame();
+}
+
+void GameWindow::setDifficultyHard() {
+    pauseGame();
+    difficulty = difficulty_hard;
     restartGame();
 }
 
@@ -226,13 +241,6 @@ void GameWindow::createPlayer() {
         maxWidthNote = qMax(maxWidthNote, frame.width());
         maxHeightNote = qMax(maxHeightNote, frame.height());
     }
-
-    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
-    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
-    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
-    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
-    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
-    std::cout << "Idle Frame total: " << idleFrames.size() << "\n";
 
     player = new QLabel(gameWindow);
     player->setPixmap(idleFrames[idleFrameIndex]);
@@ -312,7 +320,7 @@ void GameWindow::shoot() {
 
     QTimer *shoutTimer = new QTimer(this);
     connect(shoutTimer, &QTimer::timeout, [=]() {
-        if (shoutFrameIndex < shoutFrames.size()) {
+        if (shoutFrameIndex < 7) {
             player->setPixmap(shoutFrames[shoutFrameIndex]);
 
             if (shoutFrameIndex == 4) {
@@ -320,6 +328,7 @@ void GameWindow::shoot() {
             }
 
             shoutFrameIndex++;
+            std::cout << "shoutFrameIndex: " << shoutFrameIndex << "\n";
         } else {
             shoutTimer->stop();
             isShouting = false;
@@ -445,7 +454,8 @@ void GameWindow::spawnBomb() {
         }
         checkCollisions();
     });
-    bombPositionTimer->start(16);
+    int random_number = rand() % 19 + 12; // random between 12 and 30
+    bombPositionTimer->start(random_number);
 }
 
 void GameWindow::clearBombs() {
@@ -464,18 +474,13 @@ void GameWindow::clearBombs() {
 void GameWindow::startBombSpawning() {
     bombSpawnTimer = new QTimer(this);
     connect(bombSpawnTimer, &QTimer::timeout, this, &GameWindow::spawnBomb);
-    int spawnrate = 1000;
+    int spawnrate = 1500; // default is easy mode
 
-    switch (difficulty) {
-    case difficulty_easy:
+    if (difficulty == difficulty_medium){
         spawnrate = 1000;
-        break;
-    case difficulty_medium:
-        spawnrate = 500;
-        break;
-    case difficulty_hard:
-        spawnrate = 250;
-        break;
+    }
+    else if (difficulty == difficulty_hard) {
+        spawnrate = 750;
     }
 
     bombSpawnTimer->start(spawnrate); // Adjust this value to change the bomb spawn rate
@@ -494,7 +499,7 @@ void GameWindow::checkCollisions() {
         return;
     }
 
-    QRect playerRect(player->pos().x() + player->width()/2, player->pos().y() + player->height()/2, 35, 45);
+    QRect playerRect(player->pos().x() + (player->width() - 50) / 2, player->pos().y() + (player->height() - 45) / 2, 50, 45);
 
     for (int i = 0; i < bombs.size(); ++i) {
         QLabel *bomb = bombs[i];
@@ -516,7 +521,7 @@ void GameWindow::checkCollisions() {
 
 void GameWindow::hurtPlayer() {
     std::cout << "Player is hurt\n";
-    if (isHurt || !gamePaused) {
+    if (isHurt || gamePaused) {
         return;
     }
 
@@ -544,16 +549,10 @@ void GameWindow::hurtPlayer() {
 
     // Game ends when health is 0
     if (health <= 0) {
-            pauseGame();
-
-
-            player->setPixmap(QPixmap(QString(":/images/miku_die/2.png")));
-
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::information(this, tr("Game Over"), tr("Your Score is %1").arg(score));
-            if (reply == QMessageBox::Ok) {
-                restartGame();
-            }
+        pauseGame();
+        player->setPixmap(QPixmap(QString(":/images/miku_die/2.png")));
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::information(this, tr("Game Over"), tr("Your Score is %1").arg(score));
     }
 }
 
@@ -564,15 +563,17 @@ void GameWindow::pauseGame() {
     movingRight = false;
     movingUp = false;
     movingDown = false;
+    isShouting = false;
     enemyMoveTimer->stop();
     stopBombSpawning();
     clearBombs();
     animationTimer->stop();
     positionUpdateTimer->stop();
+    musicNoteAnimationTimers.clear();
 }
 
+// Reset all the variables
 void GameWindow::restartGame() {
-    // Reset health
     health = 3;
     healthLabel->setText(tr("Health: %1").arg(health));
     score = 0;
@@ -583,6 +584,8 @@ void GameWindow::restartGame() {
     positionUpdateTimer->start(16);
     player->move(0, 600 - 200);
     gamePaused = false;
+    isShouting = false;
+    isJumping = false;
 }
 
 

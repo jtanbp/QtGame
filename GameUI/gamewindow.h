@@ -28,7 +28,9 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
-    void setDifficulty(difficulty_t difficulty_level);
+    void setDifficultyEasy();
+    void setDifficultyMedium();
+    void setDifficultyHard();
     void updateAnimation();
     void gameLogout();
 
