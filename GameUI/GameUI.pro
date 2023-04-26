@@ -16,7 +16,7 @@ SOURCES += \
     scores.cpp \
     signup.cpp \
     user.cpp \
-    utility.cpp
+    welcomewindow.cpp
 
 HEADERS += \
     Utility.h \
@@ -26,13 +26,15 @@ HEADERS += \
     mainwindow.h \
     scores.h \
     signup.h \
-    user.h
+    user.h \
+    welcomewindow.h
 
 FORMS += \
     login.ui \
     mainwindow.ui \
     scores.ui \
-    signup.ui
+    signup.ui \
+    welcomewindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -47,6 +49,7 @@ DISTFILES += \
     images/bomb/1.png \
     images/bomb/2.png \
     images/enemy.png \
+    images/gameBkg.jpg \
     images/miku_die/0.png \
     images/miku_die/1.png \
     images/miku_die/2.png \
@@ -113,7 +116,9 @@ DISTFILES += \
     images/musicnote/7.png \
     images/musicnote/8.png \
     images/musicnote/9.png \
+    leaderboard.txt \
     passwordMap.txt \
+    userData.txt \
     userData.txt
 
 RESOURCES += \

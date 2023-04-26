@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QMovie>
+#include "user.h"
 
 typedef enum {
     difficulty_placeholder, // = 0
@@ -22,6 +23,7 @@ class GameWindow : public QMainWindow {
 public:
     explicit GameWindow(QWidget *parent = nullptr);
     ~GameWindow();
+    void setupPlayer(User player);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -38,6 +40,7 @@ private:
     QLabel *gameInfo;
     QWidget *gameWindow;
     QMovie *backgroundMovie;
+    User user;
     QLabel *player;
     QLabel *playerScore;
     int score;
@@ -69,7 +72,7 @@ private:
     bool isShouting;
     bool damageBuffer;
 
-    void createGameInfo();
+    void createGameInfo(QString player);
     void createGameWindow();
     void createPlayer();
     void updatePosition();
@@ -78,6 +81,7 @@ private:
     void shootMusicNote();
     void checkMusicCollision();
     void updateScore();
+    void UpdatePlayerName(QString playerName);
 
     //Phase 2
     QLabel *enemy;

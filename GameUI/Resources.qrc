@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/background.gif</file>
         <file>images/black.png</file>
         <file>images/enemy.png</file>
         <file>images/bomb/0.png</file>
@@ -72,5 +71,6 @@
         <file>images/miku_shout/5.png</file>
         <file>images/miku_shout/6.png</file>
         <file>images/miku_shout/7.png</file>
+        <file>images/gameBkg.jpg</file>
     </qresource>
 </RCC>

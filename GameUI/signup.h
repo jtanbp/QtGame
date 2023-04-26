@@ -2,6 +2,7 @@
 #define SIGNUP_H
 
 #include <QWidget>
+#include "user.h"
 
 namespace Ui {
 class SignUp;
@@ -14,6 +15,8 @@ class SignUp : public QWidget
 public:
     explicit SignUp(QWidget *parent = nullptr);
     ~SignUp();
+    User currentUser;
+    void clearFields();
 
 private slots:
     void on_signInBtn_clicked();
@@ -29,6 +32,7 @@ signals:
     void SignInClicked();
     void HomeClicked();
     void GameWindowClicked();
+    void WelcomeWindowClicked();
 };
 
 #endif // SIGNUP_H

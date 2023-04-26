@@ -6,6 +6,7 @@
 #include "scores.h"
 #include "signup.h"
 #include "gamewindow.h"
+#include "welcomewindow.h"
 #include <string>
 
 QT_BEGIN_NAMESPACE
@@ -29,11 +30,13 @@ private slots:
     void on_scoresBtn_clicked();
 
     void moveHome();
-
     void moveSignup();
 
     void on_playBtn_clicked();
-    void on_signUpBtn_clicked();
+    void playBtnFromWelcome();
+    void moveWelcomeFromSignUp();
+    void moveWelcomeFromSignIn();
+//    void on_signUpBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -41,5 +44,6 @@ private:
     Scores scoresWidget;
     SignUp signupWidget;
     GameWindow gameWindowWidget;
+    WelcomeWindow welcomeWindowWidget;
 };
 #endif // MAINWINDOW_H

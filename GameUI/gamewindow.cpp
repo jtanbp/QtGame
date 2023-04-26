@@ -26,33 +26,34 @@ GameWindow::GameWindow(QWidget *parent)
     movingDown(false),
     isJumping(false),
     isShouting(false),
-    damageBuffer(false)
+    damageBuffer(false),
+    user("")
 {
     setFixedSize(900, 800);
 
     srand(time(0));
 
-    QHBoxLayout *mainLayout = new QHBoxLayout();
-    setCentralWidget(new QWidget());
-    centralWidget()->setLayout(mainLayout);
+//    QHBoxLayout *mainLayout = new QHBoxLayout();
+//    setCentralWidget(new QWidget());
+//    centralWidget()->setLayout(mainLayout);
 
-    createGameInfo();
-    createGameWindow();
-    createPlayer();
+//    createGameInfo("Guest");
+//    createGameWindow();
+//    createPlayer();
 
-    mainLayout->addWidget(gameWindow);
-    mainLayout->addWidget(gameInfo);
+//    mainLayout->addWidget(gameWindow);
+//    mainLayout->addWidget(gameInfo);
 
-    connect(animationTimer, &QTimer::timeout, this, &GameWindow::updateAnimation);
+//    connect(animationTimer, &QTimer::timeout, this, &GameWindow::updateAnimation);
 
-    connect(positionUpdateTimer, &QTimer::timeout, this, &GameWindow::updatePosition);
+//    connect(positionUpdateTimer, &QTimer::timeout, this, &GameWindow::updatePosition);
 
-    isHurt = false;
+//    isHurt = false;
 
-    createEnemy();
-    createBombs();
-    restartGame();
-    pauseGame();
+//    createEnemy();
+//    createBombs();
+//    restartGame();
+//    pauseGame();
 }
 
 // Not sure if this is needed // Jowie
@@ -123,7 +124,7 @@ void GameWindow::keyReleaseEvent(QKeyEvent *event) {
 }
 
 // Create the fields for the Game Info on the right side of the screen // Jowie
-void GameWindow::createGameInfo() {
+void GameWindow::createGameInfo(QString player) {
     QVBoxLayout *gameInfoLayout = new QVBoxLayout();
     gameInfo->setLayout(gameInfoLayout);
     gameInfo->setFixedSize(200, 600);
@@ -136,7 +137,7 @@ void GameWindow::createGameInfo() {
     playerIcon->setScaledContents(true);
 
     // Player Name, Score, Health
-    QLabel *playerName = new QLabel("Player Name");
+    QLabel *playerName = new QLabel("Player: " + player);
     playerScore = new QLabel();
     healthLabel = new QLabel();
 
@@ -611,13 +612,39 @@ void GameWindow::gameOver() {
     int currentScore = 100; // Replace with the actual score obtained by the user
 
     // Retrieve the current user (you may want to implement a method to get the current user)
-    User currentUser("user123");
+//    User currentUser("user123");
 
-    currentUser.updateHighScore(currentScore);
-    currentUser.updateScoreHistory(currentScore);
-    currentUser.saveScoreData();
-
+    if (user.userName != "Guest") {
+        user.updateHighScore(currentScore);
+        user.updateScoreHistory(currentScore);
+        user.saveScoreData();
+    }
     // Show the game over screen, or perform any other actions you need when the game is over
+}
+
+void GameWindow::setupPlayer(User player) {
+    user = player;
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+    setCentralWidget(new QWidget());
+    centralWidget()->setLayout(mainLayout);
+
+    createGameInfo(QString::fromStdString(player.userName));
+    createGameWindow();
+    createPlayer();
+
+    mainLayout->addWidget(gameWindow);
+    mainLayout->addWidget(gameInfo);
+
+    connect(animationTimer, &QTimer::timeout, this, &GameWindow::updateAnimation);
+
+    connect(positionUpdateTimer, &QTimer::timeout, this, &GameWindow::updatePosition);
+
+    isHurt = false;
+
+    createEnemy();
+    createBombs();
+    restartGame();
+    pauseGame();
 }
 
 

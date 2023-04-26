@@ -1,14 +1,12 @@
 #include "scores.h"
 #include "ui_scores.h"
+#include <vector>
 
 Scores::Scores(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Scores)
 {
     ui->setupUi(this);
-
-    loadScoresFromFile(); // Load the scores from the file
-    showTopScores(); // Display the top score
 }
 
 Scores::~Scores()
@@ -16,9 +14,14 @@ Scores::~Scores()
     delete ui;
 }
 
+void Scores::clearFields() {
+    ui -> scoreLst -> clear();
+}
+
 void Scores::loadScoresFromFile()
 {
-    QFile file("/Users/junmingjin/MSD/CS6015/QTG/QtGame/GameUI/score.txt");
+    QString topScores;
+    QFile file("/Users/avishekchoudhury/Desktop/Project/QtGame/GameUI/leaderboard.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         // Handle error (e.g., show an error message)
         return;
@@ -27,35 +30,17 @@ void Scores::loadScoresFromFile()
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine();
-        if (line.startsWith("Name,Score")) {
+        if (line.startsWith("UserName,HighScore,Ranking,Score0,Score1,Score2,Score3,Score4")) {
             continue; // Skip header line
         }
         QStringList parts = line.split(",");
-        if (parts.size() == 2) {
-            QString name = parts[0].trimmed();
-            int score = parts[1].trimmed().toInt();
-            scoresList.append(qMakePair(name, score));
+        topScores += "\n";
+        if (parts.size() == 7) {
+            topScores += "\t" + parts[2] + "\t" + parts[0] + "\t\t" + parts[1] + "\n\n";
         }
     }
-
     file.close();
-}
-
-
-void Scores::showTopScores()
-{
-    std::sort(scoresList.begin(), scoresList.end(), [](const QPair<QString, int> &a, const QPair<QString, int> &b) {
-        return a.second > b.second;
-    });
-
-    QString topScoresText;
-
-    for (int i = 0; i < 5 && i < scoresList.size(); ++i) {
-        topScoresText += QString::number(i + 1) + ". " + scoresList[i].first + ": " + QString::number(scoresList[i].second) + "\n";
-    }
-
-    // Display the top 5 names and scores in a QLabel
-    ui->topScoresLabel->setText(topScoresText);
+    ui -> scoreLst -> setText(topScores);
 }
 
 void Scores::on_mainMenuScoreBtn_clicked()

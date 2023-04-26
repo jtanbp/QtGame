@@ -11,6 +11,7 @@
 
 SignUp::SignUp(QWidget *parent) :
     QWidget(parent),
+    currentUser(""),
     ui(new Ui::SignUp)
 {
     ui->setupUi(this);
@@ -33,6 +34,13 @@ void SignUp::on_mainMenuBtn_clicked()
     emit HomeClicked();
 }
 
+void SignUp::clearFields() {
+    ui -> firstTxt -> clear();
+    ui -> lastTxt -> clear();
+    ui -> usernameTxt -> clear();
+    ui -> passwordTxt -> clear();
+    ui -> ageTxt -> clear();
+}
 
 void SignUp::on_signUpBtn_clicked()
 {
@@ -87,7 +95,12 @@ void SignUp::on_signUpBtn_clicked()
     }
 
     User user = User(firstName, lastName, userName, dob);
-    Utility::AddUser(user, password);
-    emit GameWindowClicked();
+    if (Utility::AddUser(user, password)) {
+        currentUser = user;
+        emit WelcomeWindowClicked();
+    }
+    else {
+        ui -> errorNote ->setText("This username is already taken, please enter a different username");
+    }
 }
 

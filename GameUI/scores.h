@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <QFile>
 #include <QTextStream>
+//#include "user.h"
 
 namespace Ui {
 class Scores;
@@ -19,8 +20,9 @@ public:
     explicit Scores(QWidget *parent = nullptr);
     ~Scores();
 
-    void showTopScores();
+//    void showTopScores();
     void loadScoresFromFile();
+    void clearFields();
 
 private slots:
     void on_mainMenuScoreBtn_clicked();
@@ -28,8 +30,8 @@ private slots:
 private:
     Ui::Scores *ui;
 
-    QVector<QPair<QString, int>> scoresList;
-    QString topScore;
+//    QVector<User> scoreList;
+//    QString topScore;
 
 signals:
     void HomeClicked();

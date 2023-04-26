@@ -2,6 +2,7 @@
 #define LOGIN_H
 
 #include <QWidget>
+#include "user.h"
 
 namespace Ui {
 class Login;
@@ -14,6 +15,9 @@ class Login : public QWidget
 public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
+
+    User currentUser;
+    void clearFields();
 
 private slots:
     void on_mainMenuBtn_clicked();
@@ -29,6 +33,7 @@ signals:
     void HomeClicked();
     void SignUpClicked();
     void GameWindowClicked();
+    void WelcomeWindowClicked();
 };
 
 #endif // LOGIN_H

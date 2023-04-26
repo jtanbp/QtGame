@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QPixmap bkgnd = QPixmap("/Users/avishekchoudhury/Desktop/Project/QtGame/GameUI/gameBkg.jpg").scaled(this -> size(), Qt::IgnoreAspectRatio);
+    QPixmap bkgnd = QPixmap(":/images/gameBkg.jpg").scaled(this -> size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stackedWidget -> insertWidget(2, &scoresWidget);
     ui -> stackedWidget -> insertWidget(3, &signupWidget);
     ui -> stackedWidget -> insertWidget(4, &gameWindowWidget);
+    ui -> stackedWidget -> insertWidget(5, &welcomeWindowWidget);
 
     connect(&loginWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
     connect(&scoresWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
@@ -24,8 +25,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&signupWidget, SIGNAL(SignInClicked()), this, SLOT(on_signInBtn_clicked()));
     connect(&signupWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
     connect(&gameWindowWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
-    connect(&signupWidget, SIGNAL(GameWindowClicked()), this, SLOT(on_playBtn_clicked()));
+//    connect(&signupWidget, SIGNAL(GameWindowClicked()), this, SLOT(on_playBtn_clicked()));
+    connect(&signupWidget, SIGNAL(WelcomeWindowClicked()), this, SLOT(moveWelcomeFromSignUp()));
     connect(&loginWidget, SIGNAL(GameWindowClicked()), this, SLOT(on_playBtn_clicked()));
+    connect(&welcomeWindowWidget, SIGNAL(HomeClicked()), this, SLOT(moveHome()));
+    connect(&welcomeWindowWidget, SIGNAL(GameWindowClicked()), this, SLOT(playBtnFromWelcome()));
+    connect(&loginWidget, SIGNAL(WelcomeWindowClicked()), this, SLOT(moveWelcomeFromSignIn()));
 }
 
 MainWindow::~MainWindow()
@@ -40,18 +45,20 @@ void MainWindow::on_quitBtn_clicked()
 
 void MainWindow::on_signInBtn_clicked()
 {
+    loginWidget.clearFields();
     ui -> stackedWidget -> setCurrentIndex(1);
 }
 
 void MainWindow::on_scoresBtn_clicked()
 {
+    scoresWidget.clearFields();
+    scoresWidget.loadScoresFromFile();
     ui -> stackedWidget -> setCurrentIndex(2);
-
 }
-void MainWindow::on_signUpBtn_clicked()
-{
-    ui -> stackedWidget -> setCurrentIndex(3);
-}
+//void MainWindow::on_signUpBtn_clicked()
+//{
+//    ui -> stackedWidget -> setCurrentIndex(3);
+//}
 
 void MainWindow::moveHome()
 {
@@ -60,11 +67,32 @@ void MainWindow::moveHome()
 
 void MainWindow::moveSignup()
 {
+    signupWidget.clearFields();
     ui -> stackedWidget -> setCurrentIndex(3);
 }
 
 void MainWindow::on_playBtn_clicked()
 {
+    User user("Guest");
+    gameWindowWidget.setupPlayer(user);
     ui -> stackedWidget -> setCurrentIndex(4);
+}
+
+void MainWindow::playBtnFromWelcome()
+{
+    gameWindowWidget.setupPlayer(welcomeWindowWidget.currentUser);
+    ui -> stackedWidget -> setCurrentIndex(4);
+}
+
+void MainWindow::moveWelcomeFromSignUp() {
+    welcomeWindowWidget.clearFields();
+    welcomeWindowWidget.populateFields(signupWidget.currentUser);
+    ui -> stackedWidget -> setCurrentIndex(5);
+}
+
+void MainWindow::moveWelcomeFromSignIn() {
+    welcomeWindowWidget.clearFields();
+    welcomeWindowWidget.populateFields(loginWidget.currentUser);
+    ui -> stackedWidget -> setCurrentIndex(5);
 }
 
