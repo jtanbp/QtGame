@@ -44,16 +44,8 @@ GameWindow::GameWindow(QWidget *parent)
     mainLayout->addWidget(gameInfo);
 
     connect(animationTimer, &QTimer::timeout, this, &GameWindow::updateAnimation);
-    //animationTimer->start(100);
 
     connect(positionUpdateTimer, &QTimer::timeout, this, &GameWindow::updatePosition);
-    //positionUpdateTimer->start(16); // Update the position at 60 FPS
-
-//    health = 3;
-//    score = 0;
-//    healthLabel->setText(tr("Health: %1").arg(health));
-//    playerScore->setText(tr("Score: %1").arg(score));
-//    gamePaused = false;
 
     isHurt = false;
 
@@ -61,15 +53,16 @@ GameWindow::GameWindow(QWidget *parent)
     createBombs();
     restartGame();
     pauseGame();
-    //startBombSpawning();
 }
 
+// Not sure if this is needed // Jowie
 GameWindow::~GameWindow() {
     delete animationTimer;
     delete positionUpdateTimer;
     delete backgroundMovie;
 }
 
+// Key Press to set the moving boolean for smoother animation // Jowie
 void GameWindow::keyPressEvent(QKeyEvent *event) {
     if (event->isAutoRepeat() || isShouting || gamePaused) {
         return;
@@ -107,6 +100,7 @@ void GameWindow::keyPressEvent(QKeyEvent *event) {
     }
 }
 
+// Key Release to set the moving boolean for smoother animation // Jowie
 void GameWindow::keyReleaseEvent(QKeyEvent *event) {
     if (event->isAutoRepeat()) {
         return;
@@ -128,17 +122,20 @@ void GameWindow::keyReleaseEvent(QKeyEvent *event) {
     }
 }
 
+// Create the fields for the Game Info on the right side of the screen // Jowie
 void GameWindow::createGameInfo() {
     QVBoxLayout *gameInfoLayout = new QVBoxLayout();
     gameInfo->setLayout(gameInfoLayout);
     gameInfo->setFixedSize(200, 600);
     gameInfo->setStyleSheet("background-color: #2E8B57;");
 
+    // Player Profile picture
     QLabel *playerIcon = new QLabel();
     playerIcon->setPixmap(QPixmap(":/images/black.png"));
     playerIcon->setFixedSize(32, 32);
     playerIcon->setScaledContents(true);
 
+    // Player Name, Score, Health
     QLabel *playerName = new QLabel("Player Name");
     playerScore = new QLabel();
     healthLabel = new QLabel();
@@ -148,9 +145,6 @@ void GameWindow::createGameInfo() {
     QPushButton *hardButton = new QPushButton("Hard");
     QPushButton *logoutButton = new QPushButton("Log Out");
 
-    //easyButton->setFocusPolicy(Qt::NoFocus);
-    //mediumButton->setFocusPolicy(Qt::NoFocus);
-    //hardButton->setFocusPolicy(Qt::NoFocus);
     logoutButton->setFocusPolicy(Qt::NoFocus);
 
     gameInfoLayout->addWidget(playerIcon);
@@ -169,29 +163,34 @@ void GameWindow::createGameInfo() {
     connect(logoutButton, SIGNAL(clicked()), this, SLOT(gameLogout()));
 }
 
+// Log Out Button // Jowie
 void GameWindow::gameLogout() {
     pauseGame();
     emit HomeClicked();
 }
 
+// Easy Difficulty Button // Jowie
 void GameWindow::setDifficultyEasy() {
     pauseGame();
     difficulty = difficulty_easy;
     restartGame();
 }
 
+// Medium Difficulty Button // Jowie
 void GameWindow::setDifficultyMedium() {
     pauseGame();
     difficulty = difficulty_medium;
     restartGame();
 }
 
+// Hard Difficulty Button // Jowie
 void GameWindow::setDifficultyHard() {
     pauseGame();
     difficulty = difficulty_hard;
     restartGame();
 }
 
+// Setting Background with QMovie to animate a gif // Jowie
 void GameWindow::createGameWindow() {
     gameWindow->setFixedSize(680, 600);
 
@@ -204,6 +203,7 @@ void GameWindow::createGameWindow() {
     backgroundMovie->start();
 }
 
+// Player Constructor to load all the sprite images for various animation // Jowie
 void GameWindow::createPlayer() {
     int maxWidth = 0;
     int maxHeight = 0;
@@ -246,12 +246,12 @@ void GameWindow::createPlayer() {
     player = new QLabel(gameWindow);
     player->setPixmap(idleFrames[idleFrameIndex]);
     player->setFixedSize(maxWidth, maxHeight);
-    //player->move(0, 600 - maxHeight - 200); // Set such that player model does not go above 200 pixels
 }
 
+// Update animation that runs on a timer that actively updates the player's animation model. // Jowie
 void GameWindow::updateAnimation() {
     if (isJumping || isShouting || gamePaused) {
-        return; // Do not update the idle or running animation if the player is jumping or shooting.
+        return;
     }
 
     if (movingLeft || movingRight || movingUp || movingDown) {
@@ -263,6 +263,7 @@ void GameWindow::updateAnimation() {
     }
 }
 
+// Update position of player // Jowie
 void GameWindow::updatePosition() {
     QPoint newPos = player->pos();
     int newX = newPos.x();
@@ -286,6 +287,7 @@ void GameWindow::updatePosition() {
     player->move(newPos);
 }
 
+// Jump Animation // Jowie
 void GameWindow::jump() {
     isJumping = true;
     jumpFrameIndex = 0;
@@ -298,14 +300,14 @@ void GameWindow::jump() {
 
             // Update the player's vertical position
             qreal t = jumpFrameIndex / qreal(jumpFrames.size() - 1);
-            qreal parabolicT = -4 * t * (t - 1);
-            int newY = initialHeight - parabolicT * 150; // Adjust this value to change the jump height
+            qreal parabolicT = -4 * t * (t - 1); // Parabolic calculation Height
+            int newY = initialHeight - parabolicT * 150; // Height Value
             player->move(player->pos().x(), newY);
 
             jumpFrameIndex++;
         } else {
             jumpTimer->stop();
-            player->move(player->pos().x(), initialHeight); // Reset the position to the initial height when the jump ends
+            player->move(player->pos().x(), initialHeight);
             isJumping = false;
             delete jumpTimer;
         }
@@ -314,7 +316,7 @@ void GameWindow::jump() {
     jumpTimer->start(100); // Adjust this value to change the jump duration
 }
 
-// Enter Animation to Shout, only on the 4th frame the Music Note appears
+// Enter Animation to Shout, only on the 4th frame the Music Note appears // Jowie
 void GameWindow::shoot() {
     isShouting = true;
     shoutFrameIndex = 0;
@@ -329,7 +331,6 @@ void GameWindow::shoot() {
             }
 
             shoutFrameIndex++;
-            std::cout << "shoutFrameIndex: " << shoutFrameIndex << "\n";
         } else {
             shoutTimer->stop();
             isShouting = false;
@@ -341,6 +342,7 @@ void GameWindow::shoot() {
     shoutTimer->start(50); // set how fast to shout.
 }
 
+// Release music note in front of player model along with sprite animation // Jowie
 void GameWindow::shootMusicNote() {
     QLabel *musicNote = new QLabel(gameWindow);
     musicNote->setPixmap(musicNoteFrames[musicNoteFrameIndex]);
@@ -373,6 +375,7 @@ void GameWindow::shootMusicNote() {
     musicNoteTimer->start(16);
 }
 
+// Checks if music note rectangle collides with enemy rectangle // Jowie
 void GameWindow::checkMusicCollision() {
     if (damageBuffer) {
         return;
@@ -388,16 +391,20 @@ void GameWindow::checkMusicCollision() {
             QRect noteRect(musicNote->pos(), musicNote->size());
             if (enemyRect.intersects(noteRect)) {
                 updateScore();
+                // Unable to remove note as certain bugs appear.
+                // Due to time constraints, unable to fix bug however game can still be played with a different format
                 break;
             }
     }
 }
 
+// Update score based on difficulty // Jowie
 void GameWindow::updateScore() {
     score = score + difficulty;
     playerScore->setText(tr("Score: %1").arg(score));
 }
 
+// Create enemy object // Jowie
 void GameWindow::createEnemy() {
     enemy = new QLabel(gameWindow);
     enemyPixmap = QPixmap(":/images/enemy.png").scaled(128,128,Qt::KeepAspectRatio);
@@ -410,14 +417,14 @@ void GameWindow::createEnemy() {
     connect(enemyMoveTimer, &QTimer::timeout, this, &GameWindow::moveEnemy);
 }
 
-// Function to move enemy in a specific parabola that is similar to the Sine wave
+// Function to move enemy in a specific parabola that is similar to the Sine wave // Jowie
 void GameWindow::moveEnemy() {
     int maxY = gameWindow->height() - 150 - enemy->height(); // maximum vertical position of pixmap
     int newY = (maxY * (1 + qSin(QTime::currentTime().msecsSinceStartOfDay() * 0.001))) / 2;
     enemy->move(gameWindow->width() - enemy->width(), newY + 150);
 }
 
-// Function to add all bombs images to a list of Pixmaps (intended to have 3 different bombs)
+// Function to add all bombs images to a list of Pixmaps (intended to have 3 different bombs) // Jowie
 void GameWindow::createBombs() {
     for (int i = 0; i < 3; ++i) {
             QPixmap bombPixmap = QPixmap(QString(":/images/bomb/%1.png").arg(i)).scaled(32,32,Qt::KeepAspectRatio);
@@ -425,6 +432,7 @@ void GameWindow::createBombs() {
     }
 }
 
+// Bomb object creation // Jowie
 void GameWindow::spawnBomb() {
     QLabel *bomb = new QLabel(gameWindow);
     if (!bomb) {
@@ -456,9 +464,10 @@ void GameWindow::spawnBomb() {
         checkCollisions();
     });
     int random_number = rand() % 19 + 12; // random between 12 and 30
-    bombPositionTimer->start(random_number);
+    bombPositionTimer->start(random_number); // Sets a random speed for each bomb travel speed
 }
 
+// Clear all the bombs on screen // Jowie
 void GameWindow::clearBombs() {
     for (int i = bombs.size() - 1; 0 < bombs.size(); i--) {
         QLabel *bomb = bombs[i];
@@ -472,21 +481,23 @@ void GameWindow::clearBombs() {
     }
 }
 
+// Starts the timer for the bomb spawn rate based on difficulty // Jowie
 void GameWindow::startBombSpawning() {
     bombSpawnTimer = new QTimer(this);
     connect(bombSpawnTimer, &QTimer::timeout, this, &GameWindow::spawnBomb);
-    int spawnrate = 1500; // default is easy mode
+    int spawnrate = 900; // default is easy mode
 
     if (difficulty == difficulty_medium){
-        spawnrate = 1000;
+        spawnrate = 700;
     }
     else if (difficulty == difficulty_hard) {
-        spawnrate = 750;
+        spawnrate = 500;
     }
 
     bombSpawnTimer->start(spawnrate); // Adjust this value to change the bomb spawn rate
 }
 
+// Pauses the bomb spawn timer // Jowie
 void GameWindow::stopBombSpawning() {
     if (bombSpawnTimer) {
         bombSpawnTimer->stop();
@@ -495,6 +506,7 @@ void GameWindow::stopBombSpawning() {
     }
 }
 
+// Checks for collision with player rectangle and bomb rectangle // Jowie
 void GameWindow::checkCollisions() {
     if (isHurt || !player) {
         return;
@@ -509,6 +521,7 @@ void GameWindow::checkCollisions() {
         }
         QRect bombRect(bomb->pos().x(), bomb->pos().y(), 20, 20);
         if (playerRect.intersects(bombRect)) {
+            // Bomb removed as ther eis collision
             bombs.removeAt(i);
             bombAnimationTimers[i]->stop();
             bombAnimationTimers.removeAt(i);
@@ -520,8 +533,8 @@ void GameWindow::checkCollisions() {
     }
 }
 
+// Player takes damage and is unable to take more damage for the next 1.5 seconds // Jowie
 void GameWindow::hurtPlayer() {
-    std::cout << "Player is hurt\n";
     if (isHurt || gamePaused) {
         return;
     }
@@ -534,7 +547,7 @@ void GameWindow::hurtPlayer() {
     health--;
 
     QPixmap originalPixmap = player->pixmap(); // Save the original pixmap
-    player->setPixmap(QPixmap(QString(":/images/miku_die/0.png")));
+    player->setPixmap(QPixmap(QString(":/images/miku_die/0.png"))); // Hurt animation happens here
     animationTimer->stop();
 
     QTimer::singleShot(1500, this, [this, originalPixmap]() {
@@ -554,9 +567,12 @@ void GameWindow::hurtPlayer() {
         player->setPixmap(QPixmap(QString(":/images/miku_die/2.png")));
         QMessageBox::StandardButton reply;
         reply = QMessageBox::information(this, tr("Game Over"), tr("Your Score is %1").arg(score));
+        // Insert code to record score here.
+        // TODO: Implement code to record score
     }
 }
 
+// Stops all the timers and clear all the bomb and music notes // Jowie
 void GameWindow::pauseGame() {
     gamePaused = true;
 
@@ -573,7 +589,7 @@ void GameWindow::pauseGame() {
     musicNoteAnimationTimers.clear();
 }
 
-// Reset all the variables
+// Reset all the variables and begins the game as a new game. // Jowie
 void GameWindow::restartGame() {
     health = 3;
     healthLabel->setText(tr("Health: %1").arg(health));
@@ -588,6 +604,8 @@ void GameWindow::restartGame() {
     isShouting = false;
     isJumping = false;
 }
+
+
 void GameWindow::gameOver() {
     // This method should be called when the game is over, and the score has been calculated
     int currentScore = 100; // Replace with the actual score obtained by the user
